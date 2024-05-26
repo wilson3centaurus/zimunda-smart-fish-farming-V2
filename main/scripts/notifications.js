@@ -118,6 +118,7 @@ function sendWhatsAppMessage(message) {
 
 
 // When the user clicks anywhere outside of the modal, close it
+
 let modal = document.getElementById("id01");
 let logoutModal = document.querySelector(".user-dropdown-modal");
 
