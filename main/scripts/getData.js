@@ -1,83 +1,186 @@
-// JavaScript
-import {
-  getDatabase,
-  ref,
-  get,
-} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-
-// Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBpAI_F_qNfdqr8SmNXlmUIIzrfLGLBfxk",
-  authDomain: "zimunda-smart-farm-project.firebaseapp.com",
-  databaseURL: "https://zimunda-smart-farm-project-default-rtdb.firebaseio.com",
-  projectId: "zimunda-smart-farm-project",
-  storageBucket: "zimunda-smart-farm-project.appspot.com",
-  messagingSenderId: "1018586661772",
-  appId: "1:1018586661772:web:b82e5142e2068e8aa90ca9",
+  apiKey: "AIzaSyDnG1Kr_vUrdoVcE2SAbzEiG-tBPSe6-kw",
+  authDomain: "zimunda-sensor-data.firebaseapp.com",
+  databaseURL: "https://zimunda-sensor-data-default-rtdb.firebaseio.com",
+  projectId: "zimunda-sensor-data",
+  storageBucket: "zimunda-sensor-data.appspot.com",
+  messagingSenderId: "260289735455",
+  appId: "1:260289735455:web:c70d169bc8b86945cb1e2a",
+  measurementId: "G-WFH79MCPNP",
 };
 
-// Initialize Firebase app
-initializeApp(firebaseConfig);
+const TEMP_THRESHOLD_LOW = 18; // Low temperature threshold
+const TEMP_THRESHOLD_HIGH = 25; // High temperature threshold
 
-// Get a reference to the database
-const database = getDatabase();
+async function getDataFromFirebase() {
+  try {
+    const response = await fetch(
+      "https://zimunda-sensor-data-default-rtdb.firebaseio.com/temperature.json"
+    );
+    const temperatures = await response.json();
+    const data = [];
 
-function getDatabaseJSON(dataPath) {
-  return new Promise((resolve, reject) => {
-    get(ref(database, dataPath))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          resolve(data);
-        } else {
-          console.warn("No data found at the specified path:", dataPath);
-          resolve({}); // Resolve with an empty object if no data exists
+    if (temperatures) {
+      Object.keys(temperatures).forEach((key) => {
+        const value = temperatures[key];
+        if (value.timestamp) {
+          data.push({
+            timestamp: value.timestamp,
+            celsius: value.celsius,
+          });
         }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        reject(error);
       });
+      data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)); // Sort by earliest first
+      return data;
+    } else {
+      console.log("No temperature data available.");
+      return [];
+    }
+  } catch (error) {
+    console.error("Failed to fetch data from Firebase:", error);
+    throw error;
+  }
+}
+
+async function displayData() {
+  try {
+    const data = await getDataFromFirebase();
+    if (data.length > 0) {
+      const latest = data[data.length - 1];
+      const first = data[0];
+      const latestTemp = latest.celsius;
+      const latestTimestamp = latest.timestamp;
+      const uptime =
+        (new Date(latestTimestamp) - new Date(first.timestamp)) / 1000; // uptime in seconds
+      const uptimeString = new Date(uptime * 1000).toISOString().substr(11, 8); // HH:MM:SS format
+
+      const statusMessage = `
+        Latest Temperature: ${latestTemp}°C
+        Last Updated: ${latestTimestamp}
+        Total Uptime: ${uptimeString}
+        Temp Threshold: ${TEMP_THRESHOLD_LOW}°C - ${TEMP_THRESHOLD_HIGH}°C
+      `;
+
+      console.log(statusMessage);
+
+      // Check if temperature is outside the threshold
+      if (latestTemp < TEMP_THRESHOLD_LOW || latestTemp > TEMP_THRESHOLD_HIGH) {
+        const alertMessage = `🚨 The temperature is ${latestTemp}°C, which is outside the threshold of ${TEMP_THRESHOLD_LOW}°C - ${TEMP_THRESHOLD_HIGH}°C. Please take action.`;
+        addNotification(alertMessage);
+      }
+
+      // Updating HTML
+      const lastUpdate = document.getElementById("lastUpdate");
+      const upTime = document.getElementById("uptime");
+      const thresholdDisplay = document.getElementById("thresholdDisplay");
+      if (lastUpdate) lastUpdate.innerText = `${latestTimestamp}`;
+      if (upTime) upTime.innerText = `${uptimeString}`;
+      if (thresholdDisplay) thresholdDisplay.innerText = `Temp Threshold: ${TEMP_THRESHOLD_LOW}°C - ${TEMP_THRESHOLD_HIGH}°C`;
+      
+    } else {
+      console.log("No data available.");
+      const myDiv = document.getElementById("myDiv");
+      if (myDiv) {
+        myDiv.innerText = "No data available.";
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching and displaying data:", error);
+    const myDiv = document.getElementById("myDiv");
+    if (myDiv) {
+      myDiv.innerText = "Error fetching data.";
+    }
+  }
+}
+
+// Notification functions (assuming these are the same as in notifications.js)
+async function sendWhatsAppNotification(message) {
+  const accessToken =
+    "EAALi0GGITnUBOwzce4OBI4oybx0EjNzPnUZApZCeDyJ9c5I0xDHSVPldmcgJAZCPcoSjd0ETsmHQZArFcqzmRsNZAQcjpx6Q7QACvNvcQiQZBO2chiGv79WPDGLc8fZB0QjOQzfTVxBPw53ZCo9DnPlQuIKmAZAt7wCceCEmluySkJHPEuJAnZBZAQHYZA5EjWsiUWjB4pfxrJovZClvfZBlpUZCOkZD";
+  const phoneNumberId = "312573365276673";
+  const recipientPhoneNumber = "263787209882";
+
+  const url = `https://graph.facebook.com/v16.0/${phoneNumberId}/messages`;
+
+  const body = {
+    messaging_product: "whatsapp",
+    to: recipientPhoneNumber,
+    type: "text",
+    text: {
+      body: message,
+    },
+  };
+
+  try {
+    console.log("Sending WhatsApp message:", message);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    console.log("WhatsApp Response:", data);
+    if (data.error) {
+      console.error("Error sending WhatsApp message:", data.error.message);
+    } else {
+      console.log("WhatsApp message sent successfully");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+function addNotification(message) {
+  const notificationMessages = document.getElementById("notification-messages");
+  const notificationIcon = document.getElementById("notification-icon");
+
+  // Checking if the message already exists
+  for (let i = 0; i < notificationMessages.children.length; i++) {
+    if (notificationMessages.children[i].textContent.includes(message)) {
+      return; // If message exists, do not add another one
+    }
+  }
+
+  // Creating new notification element
+  const p = document.createElement("p");
+  p.innerHTML = `${message} <button onclick="this.parentElement.remove(); checkNotifications();">Clear</button>`;
+  notificationMessages.appendChild(p);
+
+  // Change notification icon to indicate there are new notifications
+  notificationIcon.classList.add("has-notifications");
+
+  // Send WhatsApp notification
+  sendWhatsAppNotification(message).catch((error) => {
+    console.error("Error sending WhatsApp notification:", error);
   });
 }
 
-const getDataBtn = document.querySelector(".getData");
+function checkNotifications() {
+  const notificationMessages = document.getElementById("notification-messages");
+  const notificationIcon = document.getElementById("notification-icon");
 
-getDataBtn.addEventListener("click", () => {
-  const dataPath = "/"; // Replace with the desired path in your database
+  if (notificationMessages.children.length === 0) {
+    notificationIcon.classList.remove("has-notifications");
+  }
+}
 
-  getDatabaseJSON(dataPath)
-    .then((data) => {
-      const jsonData = JSON.stringify(data, null, 2); // Format JSON for readability
+function removeNotification(message) {
+  const notificationMessages = document.getElementById("notification-messages");
+  for (let i = 0; i < notificationMessages.children.length; i++) {
+    if (notificationMessages.children[i].textContent.includes(message)) {
+      notificationMessages.children[i].remove();
+      checkNotifications();
+      break;
+    }
+  }
+}
 
-      const blob = new Blob([jsonData], { type: "text/json;charset=utf-8" });
-      const url = window.URL.createObjectURL(blob);
+// Display data initially
+displayData();
 
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "data.json";
-      link.style.display = "none";
-      document.body.appendChild(link);
-      link.click();
-
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    })
-    .catch((error) => {
-      console.error("Error downloading data:", error);
-      // Handle errors appropriately (e.g., display an error message)
-    });
-});
-
-/*
-getDataBtn.addEventListener("click", function () {
-  getDatabaseJSON("/")
-    .then((data) => {
-      console.log("Fetched data in JSON format:", data);
-    })
-    .catch((error) => {
-      console.error("Error fetching data:", error);
-    });
-});
-*/
+// Set interval to show the system status every 5 seconds
+setInterval(displayData, 2000);

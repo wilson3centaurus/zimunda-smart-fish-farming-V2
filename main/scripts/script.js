@@ -27,3 +27,22 @@ const month = monthNames[currentDate.getMonth()];
 const year = currentDate.getFullYear();
 
 document.querySelector(".currentDate").innerText = `${day} ${month} ${year}`;
+
+
+
+/* ================ CHANGE EMAIL ========================== */
+async function changeEmail() {
+  const { value: email } = await Swal.fire({
+    title: "Messages Preferences",
+    input: "email",
+    inputLabel: "Change the Notifications Contact Point",
+    inputPlaceholder: "Enter your email address",
+  });
+  if (email) {
+    Swal.fire({
+      title: "Success",
+      text: "Successfully changed the messages contact point.",
+      icon: "success",
+    });
+  }
+}
