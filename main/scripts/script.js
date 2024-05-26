@@ -46,3 +46,24 @@ async function changeEmail() {
     });
   }
 }
+
+/* ================ CHANGE PHONE NUMBER ========================== */
+async function changePhoneNumber() {
+  const { value: phoneNumber } = await Swal.fire({
+    title: "Messages Preferences",
+    input: "tel",
+    inputLabel: "Change the Notifications Contact Point",
+    inputPlaceholder: "Enter your phone number",
+    inputAttributes: {
+      pattern: "[0-9]{10,15}",
+    },
+  });
+  if (phoneNumber) {
+    recipientPhoneNumber = phoneNumber;
+    Swal.fire({
+      title: "Success",
+      text: "Successfully changed the messages contact point.",
+      icon: "success",
+    });
+  }
+}

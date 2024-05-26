@@ -80,9 +80,6 @@
                 <!-- Modal Content -->
                 <div class="notifications">
                   <h3 class="fas fa-bell">Notifications:</h3>
-                  <p>Notification 1 <button>Clear</button></p>
-                  <p>Notification 2 <button>Clear</button></p>
-                  <p>Notification 3 <button>Clear</button></p>
                 </div>
               </div>
             </li>
@@ -127,11 +124,11 @@
         <div class="center">
           <div class="state">
             <h2 class="card-heading">System State:</h2>
-            <span>checking...</span>
+            <span id="systemState">checking...</span>
           </div>
           <div class="uptime">
             <h2 class="card-heading">Uptime:</h2>
-            <span>--/--/--</span>
+            <span id="uptime">--/--/--</span>
           </div>
         </div>
 
@@ -146,7 +143,7 @@
             frameborder="0"
             class="current-temp"
           ></iframe>
-          <div class="last-update">Last Updated: The system is down!</div>
+          <div class="last-update">Last Updated: <span id="lastUpdate">The system is down!</span></div>
           <ul class="test">
             <img class="logo" src="zimunda-icon.png" alt="" />
             <li>
@@ -214,6 +211,7 @@
     </div>
     <!--====== End of Main ======-->
 
+    <script src="./scripts/getData.js"></script>
     <script src="./scripts/sensorData.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./scripts/script.js"></script>
