@@ -46,12 +46,14 @@ function checkServerState() {
       systemState.innerText = "🟢Running";
       removeNotification("🚨 System is down");
       addNotification("✅ System is Up");
+      console.log("✅ System is Up");
     })
     .catch((error) => {
       console.error(error.message);
       systemState.innerText = "🔴Down";
       addNotification("🚨 System is down");
       removeNotification("✅ System is Up");
+      console.log("🚨 System is down");
     });
 }
 
@@ -59,6 +61,8 @@ function checkNetworkStatus() {
   if (!navigator.onLine) {
     addNotification("📡 Network is down");
     addNotification("⛔ Weather information unavailable");
+    console.log("📡 Network is down");
+    console.log("⛔ Weather information unavailable");
   } else {
     removeNotification("📡 Network is down");
     removeNotification("⛔ Real-time Weather information unavailable");
@@ -118,7 +122,6 @@ function sendWhatsAppMessage(message) {
 
 
 // When the user clicks anywhere outside of the modal, close it
-
 let modal = document.getElementById("id01");
 let logoutModal = document.querySelector(".user-dropdown-modal");
 

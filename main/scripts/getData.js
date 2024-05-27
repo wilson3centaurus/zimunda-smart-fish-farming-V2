@@ -9,8 +9,8 @@ const firebaseConfig = {
   measurementId: "G-WFH79MCPNP",
 };
 
-const TEMP_THRESHOLD_LOW = 18; // Low temperature threshold
-const TEMP_THRESHOLD_HIGH = 25; // High temperature threshold
+const TEMP_THRESHOLD_LOW = 18;
+const TEMP_THRESHOLD_HIGH = 25;
 
 async function getDataFromFirebase() {
   try {
@@ -37,7 +37,7 @@ async function getDataFromFirebase() {
       return [];
     }
   } catch (error) {
-    console.error("Failed to fetch data from Firebase:", error);
+    console.log("Failed to fetch data from Firebase!");
     throw error;
   }
 }
@@ -85,7 +85,7 @@ async function displayData() {
       }
     }
   } catch (error) {
-    console.error("Error fetching and displaying data:", error);
+    console.log("Error fetching and displaying data!");
     const myDiv = document.getElementById("myDiv");
     if (myDiv) {
       myDiv.innerText = "Error fetching data.";
