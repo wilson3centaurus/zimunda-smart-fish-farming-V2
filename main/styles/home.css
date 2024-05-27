@@ -178,14 +178,15 @@ nav a {
   text-align: center;
 }
 .weather-container {
-  border: 1px solid purple;
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
+.weather-container:hover {
+  opacity: 0.8;
+}
 .current-weather {
-  flex: 1;
-  border: 1px red solid;
+  flex: 20%;
   background: #DFFFFF;
   background: linear-gradient(315deg, #8794d8, #034279);
   height: 100px;
@@ -197,13 +198,15 @@ nav a {
   justify-content: center;
   gap: 50px;
 }
+.temperature {
+  font-size: 40px;
+}
 .details {
   text-align: start;
-  margin-left: 3px;
+  margin-left: 10px;
 }
 .forecast {
   flex: 1;
-  border: 1px green solid;
   height: 200px;
   display: flex;
   flex-direction: column;
@@ -213,7 +216,6 @@ nav a {
 }
 .day {
   background: linear-gradient(315deg, #8794d8, #034279);
-  border: 1px solid yellow;
   color: #041a38;
   height: 180px;
   text-align: center;

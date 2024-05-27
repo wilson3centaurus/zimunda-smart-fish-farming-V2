@@ -145,7 +145,131 @@
       </div>
     </div>
     <!--====== End of Home ======-->
-
+    <!-- ======== Weather Overview Modal-->
+<div class="weather-modal">
+  <h1 class="weather-overview">
+  Real-time Weather Overview
+  <span class="fas fa-close close-modal" onclick="closeModal()">X</span>
+  </h1>
+  <div class="modal-container">
+  <div class="weather-input">
+    <h3>Enter a City Name</h3>
+<input
+class="city-input"
+type="text"
+placeholder="E.g., New York, London, Tokyo"
+/>
+<button class="search-btn">Search</button>
+<div class="separator"></div>
+<button class="location-btn">Use Current Location</button>
+</div>
+<div class="weather-data">
+<div class="current-weather">
+<div class="details">
+<h2>_______ ( ______ )</h2>
+<h6>Temperature: __°C</h6>
+<h6>Wind: __ M/S</h6>
+<h6>Humidity: __%</h6>
+</div>
+</div>
+<div class="days-forecast">
+<h2>5-Day Forecast</h2>
+<ul class="weather-cards">
+<li class="card">
+<h3>( ______ )</h3>
+<h6>Temp: __C</h6>
+<h6>Wind: __ M/S</h6>
+<h6>Humidity: __%</h6>
+</li>
+<li class="card">
+<h3>( ______ )</h3>
+<h6>Temp: __C</h6>
+<h6>Wind: __ M/S</h6>
+<h6>Humidity: __%</h6>
+</li>
+<li class="card">
+<h3>( ______ )</h3>
+<h6>Temp: __C</h6>
+<h6>Wind: __ M/S</h6>
+<h6>Humidity: __%</h6>
+</li>
+<li class="card">
+<h3>( ______ )</h3>
+<h6>Temp: __C</h6>
+<h6>Wind: __ M/S</h6>
+<h6>Humidity: __%</h6>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="contents">
+  <!-- ======== Real Weather Container-->
+  <div class="weather-container">
+  <a href="" onclick="toggleWeatherContainer()">
+  <div class="weather-container">
+  <div class="current-weather">
+  <div class="temperature">
+  <span class="temp"></span>
+  <span class="temp-icon"></span>
+  </div>
+  <div class="details">
+  <div class="humidity"></div>
+  <div class="wind"></div>
+  <div class="rain-probability"></div>
+  </div>
+  </div>
+  <div class="forecast">
+  <div class="day">
+  <span class="day-name">SAT</span>
+  <span class="day-temp"></span>
+  <span class="day-icon"></span>
+  </div>
+  <div class="day">
+  <span class="day-name">SUN</span>
+  <span class="day-temp"></span>
+  <span class="day-icon"></span>
+  </div>
+  <div class="day">
+  <span class="day-name">MON</span>
+  <span class="day-temp"></span>
+  <span class="day-icon"></span>
+  </div>
+  </div>
+  </div>
+  </a>
+  <div class="weather-container">
+  <div class="current-weather">
+  <div class="temperature">
+  <span class="temp"></span>
+  <span class="temp-icon"></span>
+  </div>
+  <div class="details">
+  <div class="humidity"></div>
+  <div class="wind"></div>
+  <div class="rain-probability"></div>
+  </div>
+  </div>
+  <div class="forecast">
+  <div class="day">
+  <span class="day-name">SAT</span>
+  <span class="day-temp"></span>
+  <span class="day-icon"></span>
+</div>
+<div class="day">
+<span class="day-name">SUN</span>
+<span class="day-temp"></span>
+<span class="day-icon"></span>
+</div>
+<div class="day">
+<span class="day-name">MON</span>
+<span class="day-temp"></span>
+<span class="day-icon"></span>
+</div>
+</div>
+</div>
+</div>
     <script src="./scripts/weatherContainer.js"></script>
     <script src="./scripts/script.js"></script>
     <script type="text/javascript" src="./scripts/userLogin.js"></script>
