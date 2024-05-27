@@ -112,9 +112,9 @@ nav a {
 }
 .content-block {
   background-color: #181b1f;
-  width: 355px;
-  height: 160px;
-  border: 1px solid rgba(101, 116, 153, 0.5);
+  width: 370px;
+  height: 190px;
+  border: 1px solid rgba(79, 83, 94, 0.5);
   border-radius: 8px;
   padding: 1rem;
   transition: transform 0.3s ease-in-out;
@@ -134,7 +134,8 @@ nav a {
 .messages,
 .notifications {
   padding: 20px;
-  width: 310px;
+  width: 340px;
+  height: 30px;
   text-align: start;
   background-color: #14171b;
   border-radius: 5px;
@@ -143,7 +144,7 @@ nav a {
 .span1,
 .span2 {
   text-align: end;
-  margin-left: 135px;
+  margin-left: 255px;
   background-color: red;
   color: black;
   padding: 1px;
@@ -175,4 +176,50 @@ nav a {
   margin-top: 0px;
   margin-bottom: -11px;
   text-align: center;
+}
+.weather-container {
+  border: 1px solid purple;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.current-weather {
+  flex: 1;
+  border: 1px red solid;
+  background: #DFFFFF;
+  background: linear-gradient(315deg, #8794d8, #034279);
+  height: 100px;
+  color: #041a38;
+  height: 200px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+}
+.details {
+  text-align: start;
+  margin-left: 3px;
+}
+.forecast {
+  flex: 1;
+  border: 1px green solid;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+}
+.day {
+  background: linear-gradient(315deg, #8794d8, #034279);
+  border: 1px solid yellow;
+  color: #041a38;
+  height: 180px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  gap: 10px;
+  border-radius: 5px;
 }

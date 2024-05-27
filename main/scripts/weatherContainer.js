@@ -24,9 +24,7 @@ const humidity = document.querySelector(".humidity");
 const wind = document.querySelector(".wind");
 const rainProbability = document.querySelector(".rain-probability");
 temp.textContent = `${Math.round(weatherData.main.temp)}°`;
-icon.innerHTML = `<i class="bi bi-${getWeatherIcon(
-weatherData.weather[0].id
-)}"></i>`;
+//icon.innerHTML = `<i class="bi bi-sun"></i>`;
 humidity.textContent = `Humidity: ${weatherData.main.humidity}%`;
 wind.textContent = `Wind Speed: ${weatherData.wind.speed} m/s`;
 rainProbability.textContent = `Rain Probability: ${weatherData.pop * 100}%`;
@@ -44,19 +42,19 @@ function displayForecast(weatherData) {
     .toLocaleString("en-us", { weekday: "short" })
     .toUpperCase();
     dayTemp.textContent = `${Math.round(dayData.main.temp)}°`;
-    dayIcon.innerHTML = `<i class="bi bi-${getWeatherIcon(
+    /*dayIcon.innerHTML = `<i class="bi bi-${getWeatherIcon(
     dayData.weather[0].id
-    )}"></i>`;
+    )}"></i>`;*/
     }
    }
    
 // Function to get weather icon based on weather condition code
 function getWeatherIcon(weatherCode) {
 const icons = {
-"01d": "sun", // Clear sky (day)
+"01d": "sun-o", // Clear sky (day)
 "01n": "moon", // Clear sky (night)
 "02d": "cloudy-sunrain", // Few clouds (day)
-"02n": "cloudy", // Few clouds (night)
+"02n": "cloud", // Few clouds (night)
 "03d": "cloud", // Scattered clouds (day)
 "03n": "cloud", // Scattered clouds (night)
 "04d": "clouds", // Broken clouds (day)
