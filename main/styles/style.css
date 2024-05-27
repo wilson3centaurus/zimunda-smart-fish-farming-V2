@@ -1,8 +1,8 @@
 :root {
-  --background: #1f2937;
+  --background: #22262b;
   --navbar-width: 256px;
   --navbar-width-min: 80px;
-  --navbar-dark-primary: #111827;
+  --navbar-dark-primary: #181b1f;
   --navbar-dark-secondary: #2c3e50;
   --navbar-light-primary: #f5f6fa;
   --navbar-light-secondary: #8392a5;
@@ -10,7 +10,7 @@
 html,
 body {
   margin: 0;
-  background: var(--background);
+  background-color: var(--background);
   transition: 0.9s;
 }
 

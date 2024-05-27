@@ -86,8 +86,38 @@
         </p>
       </div>
       <div class="contents">
-        <div class="content-block" href="dashboard.html">
-          <a class="social-links" href="dashboard.html" target="_blank">
+        <div class="content-block weather-container" onclick="toggleWeatherContainer()">
+            <div class="current-weather">
+                <div class="temperature">
+                    <span class="temp"></span>
+                    <span class="temp-icon"></span>
+                </div>
+                <div class="details">
+                    <div class="humidity"></div>
+                    <div class="wind"></div>
+                    <div class="rain-probability"></div>
+                </div>
+            </div>
+            <div class="forecast">
+                <div class="day">
+                    <span class="day-name">SAT</span>
+                    <span class="day-temp"></span>
+                    <span class="day-icon"></span>
+                </div>
+                <div class="day">
+                    <span class="day-name">SUN</span>
+                    <span class="day-temp"></span>
+                    <span class="day-icon"></span>
+                </div>
+                <div class="day">
+                    <span class="day-name">MON</span>
+                    <span class="day-temp"></span>
+                    <span class="day-icon"></span>
+                </div>
+            </div>
+        </div>
+        <div class="content-block">
+          <a class="social-links" href="dashboard.html">
             <img
               class="socials"
               src="images/aquarium.png"
@@ -99,25 +129,12 @@
           </a>
           Manage Your Pond with Confidence.
         </div>
-        <div class="content-block coffeeDev">
-          <a class="social-links coffeeDev" href="" target="_blank">
-            <img
-              class="socials coffeeDev"
-              src="images/coffee1.png"
-              alt="Gmail"
-              width="30px"
-              height="auto"
-            />Coffee Farming
-            <br />
-          </a>
-          Manage Your Coffee Farm for Success.
-        </div>
         <div class="content-block">
-          <a class="messages" href="" target="_blank">
-            New Messages <span class="span1">5</span>
+          <a class="messages" onclick="changePhoneNumber()">
+            Messages Prefences
             <br />
           </a>
-          <a class="notifications" href="" target="_blank">
+          <a class="notifications" href="">
             New Notifications <span class="span2">3</span>
           </a>
         </div>
@@ -128,6 +145,7 @@
     </div>
     <!--====== End of Home ======-->
 
+    <script src="./scripts/weatherContainer.js"></script>
     <script src="./scripts/script.js"></script>
     <script type="text/javascript" src="./scripts/userLogin.js"></script>
     <noscript>Please enable Javascript to view this page!</noscript>

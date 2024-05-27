@@ -1,3 +1,6 @@
+* {
+  font-family: Nova Round, "Open Sans", "Helvetica Neue", sans-serif;
+}
 nav {
   display: flex;
   justify-content: space-evenly;
@@ -26,7 +29,6 @@ nav ul {
 
 nav ul li {
   font-weight: bold;
-  font-family: Nova Round, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 nav a {
@@ -59,7 +61,6 @@ nav a {
 }
 
 .container {
-  font-family: Nova Round, "Open Sans", "Helvetica Neue";
   margin-left: 100px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -110,10 +111,10 @@ nav a {
   text-decoration: none;
 }
 .content-block {
-  background-color: #111827;
+  background-color: #181b1f;
   width: 355px;
   height: 160px;
-  border: 1px solid rgba(39, 55, 94, 0.5);
+  border: 1px solid rgba(101, 116, 153, 0.5);
   border-radius: 8px;
   padding: 1rem;
   transition: transform 0.3s ease-in-out;
@@ -132,12 +133,12 @@ nav a {
 }
 .messages,
 .notifications {
-  font-family: "Open Sans", "Helvetica Neue"; 
   padding: 20px;
   width: 310px;
   text-align: start;
-  background-color: #070c16;
+  background-color: #14171b;
   border-radius: 5px;
+  border: 1px solid rgba(45, 49, 59, 0.5);
 }
 .span1,
 .span2 {

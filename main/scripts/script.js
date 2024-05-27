@@ -67,3 +67,11 @@ async function changePhoneNumber() {
     });
   }
 }
+
+function toggleWeatherContainer() {
+  const weatherContainer = document.getElementById('weatherContainer');
+  weatherContainer.style.display = weatherContainer.style.display === 'none' ? 'block'
+ : 'none';
+}
+
+ 
