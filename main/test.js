@@ -22,6 +22,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Example usage:
-  setWaterLevel(90); // Change this value to test different water levels
+  // Example usage: Animate water level change
+  function animateWaterLevel(start, end, duration) {
+    let startTime = null;
+
+    function animationStep(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      const currentLevel = start + (end - start) * progress;
+      setWaterLevel(currentLevel);
+
+      if (progress < 1) {
+        requestAnimationFrame(animationStep);
+      }
+    }
+
+    requestAnimationFrame(animationStep);
+  }
+
+  // Change this value to test different water levels (start, end, duration in ms)
+  animateWaterLevel(0, 50, 1000); // Example: animate from 0% to 50% over 2 seconds
 });
