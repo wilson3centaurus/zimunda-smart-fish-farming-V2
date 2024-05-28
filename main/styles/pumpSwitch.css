@@ -1,0 +1,53 @@
+input[type="checkbox"] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	margin: auto;
+	cursor: pointer;
+	outline: none;
+	height: 35px;
+	width: 100px;
+    border-radius: 30px;
+	background-color: #ff0606;
+	-webkit-transform: skewX(-7deg);
+	-ms-transform: skewX(-7deg);
+	transform: skewX(0deg);
+	-webkit-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+input[type="checkbox"]:before {
+	font-size: 18px;
+	content: "OFF";
+	position: absolute;
+	height: 25px;
+	width: 50px;
+    margin-top: -3px;
+    border-radius: 30px;
+	background-color: #ffffff;
+	color: rgb(255, 0, 0);
+	top: 0.42em;
+	left: 0.42em;
+	-webkit-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	font-family: "Poppins", sans-serif;
+	font-weight: 600;
+}
+input[type="checkbox"]:checked {
+	background-color: green;
+}
+input[type="checkbox"]:checked:before {
+	content: "ON";
+	left: 40px;
+	color: green;
+}

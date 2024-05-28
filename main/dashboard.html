@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="styles/notifications.css" />
     <link rel="stylesheet" href="styles/account.css" />
     <link rel="stylesheet" href="./styles/waterLevel.css">
+    <link rel="stylesheet" href="./styles/pumpSwitch.css">
     <link rel="icon" href="zimunda-icon.png" type="icon" />
     <title>Dashboard</title>
   </head>
@@ -198,10 +199,20 @@
       <!-- ========= Pumps =========-->
       <div class="recommendations">
         <h2 class="card-heading">Pumps</h2>
-        <p>Pump 1 (Inlet) <span class="pump-switch1">on/off</span></p>
-        <p>Status: <span id="pump1-status">checking...</span></p>
-        <p>Pump 2 (Outlet) <span class="pump-switch2">on/off</span></p>
-        <p>Status: <span id="pump2-status">checking...</span></p>
+        <div class="pumps">
+          <div class="pump1">
+            <p>Pump 1 (Inlet) <span class="pump-switch1">
+          <p>Status: <span id="pump1-status">checking...</span></p>
+          <div class="switch-container"><input type="checkbox" /></div>
+        </span></p>
+          </div>
+          <div class="pump2">
+            <p>Pump 2 (Outlet) <span class="pump-switch2">
+          <p>Status: <span id="pump2-status">🟢running (on)</span></p>
+          <div class="switch-container"><input type="checkbox" /></div>
+        </span></p>
+          </div>
+        </div>
       </div>
       <!--========= End of Pumps =========-->
 

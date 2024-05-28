@@ -108,12 +108,12 @@ iframe {
   margin-bottom: 9px;
   color: #9ec8f1;
 }
-.pump-switch1,
-.pump-switch2 {
-  margin-left: 190px;
+.pumps {
+  display: flex;
 }
-.pump-switch2 {
-  margin-left: 180px;
+.pump1,
+.pump2 {
+  flex: 1;
 }
 .top-line {
   margin: 0 auto;
