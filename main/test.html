@@ -3,41 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proving Grounds</title>
+    <title>Water Visualization</title>
     <link rel="stylesheet" href="test.css">
-    <script src="test.js"></script>
 </head>
 <body>
-    <div class="weather-container">
-        <div class="current-weather">
-        <div class="temperature">
-        <span class="temp"></span>
-        <span class="temp-icon"></span>
+    <div class="inner-header flex">
+                <p id="water-level-status">Water level status: Normal</p>
+            </div>
+    <div class="container">
+        <div class="inner-container">
+            <!--Content before waves-->
+            <div class="inner-header flex">
+                <!--Just the logo.. Don't mind this-->
+            
+                
+            </div>
+            
+
+            <!--Waves Container-->
+            <div class="waves-container">
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/>
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(0,172,193,0.7)"/>
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(0,172,193,0.5)"/>
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(0,172,193,0.3)"/>
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="#00acc1"/>
+                    </g>
+                </svg>
+            </div>
+            <!--Waves end-->
+
         </div>
-        <div class="details">
-        <div class="humidity"></div>
-        <div class="wind"></div>
-        <div class="rain-probability"></div>
-        </div>
-        </div>
-        <div class="forecast">
-        <div class="day">
-        <span class="day-name">SAT</span>
-        <span class="day-temp"></span>
-        <span class="day-icon"></span>
-        </div>
-        <div class="day">
-        <span class="day-name">SUN</span>
-        <span class="day-temp"></span>
-        <span class="day-icon"></span>
-        </div>
-        <div class="day">
-        <span class="day-name">MON</span>
-        <span class="day-temp"></span>
-        <span class="day-icon"></span>
-        </div>
-        </div>
-        </div>
+        <!--Header ends-->
+
         
+    </div>
 </body>
 </html>
