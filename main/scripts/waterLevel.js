@@ -6,7 +6,6 @@ const high_1 = 150;
 const high_2 = 154;
 
 function setWaterHeight(beforeHeight, afterHeight) {
-  // Create or update the style element for ::before pseudo-element
   let beforeStyle = document.getElementById("beforeStyle");
   if (!beforeStyle) {
     beforeStyle = document.createElement("style");
@@ -15,7 +14,6 @@ function setWaterHeight(beforeHeight, afterHeight) {
   }
   beforeStyle.innerHTML = `.waterContainer::before { height: ${beforeHeight}%; }`;
 
-  // Create or update the style element for ::after pseudo-element
   let afterStyle = document.getElementById("afterStyle");
   if (!afterStyle) {
     afterStyle = document.createElement("style");
@@ -25,5 +23,4 @@ function setWaterHeight(beforeHeight, afterHeight) {
   afterStyle.innerHTML = `.waterContainer::after { height: ${afterHeight}%; }`;
 }
 
-// Example usage:
 setWaterHeight(normal_1, normal_2);
