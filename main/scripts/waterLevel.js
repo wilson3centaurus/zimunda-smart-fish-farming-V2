@@ -23,4 +23,22 @@ function setWaterHeight(beforeHeight, afterHeight) {
   afterStyle.innerHTML = `.waterContainer::after { height: ${afterHeight}%; }`;
 }
 
-setWaterHeight(normal_1, normal_2);
+let waterLevel1 = normal_1;
+let waterLevel2 = normal_2;
+
+setWaterHeight(waterLevel1, waterLevel2);
+
+let waterLevelStatus = document.querySelector(".waterLevelStatus");
+if (waterLevel1 === low_1 || waterLevel2 === low_2) {
+    waterLevelStatus.innerHTML = "⚠️Low Water Level!";
+    waterLevelStatus.style.color = "red";
+}
+if (waterLevel1 === normal_1 || waterLevel2 === normal_2) {
+    waterLevelStatus.innerHTML = "😴Normal Water Level🏖️";
+    waterLevelStatus.style.color = "green";
+    waterLevelStatus.style.width = "190px";
+}
+if (waterLevel1 === high_1 || waterLevel2 === high_2) {
+  waterLevelStatus.innerHTML = "⚠️High Water Level! 🌊Overflow Expected!";
+  waterLevelStatus.style.color = "red";
+}
