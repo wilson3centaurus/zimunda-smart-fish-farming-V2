@@ -35,13 +35,18 @@
   background: linear-gradient(315deg, #8794d8, #034279);
   border: 1px solid rgb(225, 250, 225);
   list-style-type: none;
-  width: 230px;
+  width: 300px;
   height: 440px;
   font-size: 21px;
   padding: 10px;
   color: #94c0fd;
   border-radius: 10px;
   transition: 0.9s;
+}
+.card h6 {
+  font-size: 20px;
+  line-height: 0;
+  margin-top: 10px;
 }
 .card:hover {
   margin: 10px;

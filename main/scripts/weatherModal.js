@@ -1,7 +1,7 @@
 const cityInput = document.querySelector(".city-input");
 const searchButton = document.querySelector(".search-btn");
 const locationButton = document.querySelector(".location-btn");
-const currentWeatherDiv = document.querySelector(".current-weather");
+const currentWeatherDiv = document.querySelector(".card");
 const weatherCardsDiv = document.querySelector(".weather-cards");
 
 const API_KEY = "d8e17c4bf2e9c6c4a1e4dfaf970742b6";
@@ -87,7 +87,7 @@ const getCityCoordinates = (cityName) => {
       getWeatherDetails(name, lat, lon);
     })
     .catch(() => {
-      alert("An error occurred while fetching the coordinates!");
+      showError();
     });
 };
 
