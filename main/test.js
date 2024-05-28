@@ -45,3 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Change this value to test different water levels (start, end, duration in ms)
   animateWaterLevel(0, 50, 1000); // Example: animate from 0% to 50% over 2 seconds
 });
+
+
+
+low = 240 | 244;
+normal = 170 | 174;
+high = 150 | 154;
+

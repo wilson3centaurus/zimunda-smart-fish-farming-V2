@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="styles/pondview.css" />
     <link rel="stylesheet" href="styles/notifications.css" />
     <link rel="stylesheet" href="styles/account.css" />
+    <link rel="stylesheet" href="./styles/waterLevel.css">
     <link rel="icon" href="zimunda-icon.png" type="icon" />
     <title>Dashboard</title>
   </head>
@@ -170,7 +171,10 @@
       <!--========= Water Level View =========-->
       <div class="water-level">
         <h2 class="card-heading">Water Level</h2>
-        <p>water level sensor</p>
+        <section>
+          <p class="waterLevelStatus">john</p>
+          <div class="waterContainer"></div>
+        </section>
       </div>
       <!--========= End of Tbale View =========-->
       <!--========= Pond View Images =========-->
@@ -209,6 +213,7 @@
     </div>
     <!--====== End of Main ======-->
 
+    <script src="./scripts/waterLevel.js"></script>
     <script src="./scripts/getData.js"></script>
     <script src="./scripts/sensorData.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
