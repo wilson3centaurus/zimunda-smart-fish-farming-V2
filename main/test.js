@@ -23,5 +23,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Example usage:
-  setWaterLevel(100); // Change this value to test different water levels
+  setWaterLevel(90); // Change this value to test different water levels
 });
