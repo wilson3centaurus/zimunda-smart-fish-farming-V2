@@ -1,5 +1,5 @@
 .weather-modal {
-  background-color: hotpink;
+  background-color: rgb(196, 205, 255);
   font-family: Nova Round, "Open Sans", "Helvetica Neue";
   position: fixed;
   left: 0;
@@ -8,36 +8,59 @@
   height: 100%;
   overflow: auto;
   z-index: 20;
+  display: none;
 }
 .weather-overview {
-  border: 1px solid blue;
+  background: linear-gradient(315deg, #526fff, #012546);
   text-align: center;
   padding: 20px;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 10px;
   border-radius: 10px;
+  color: white;
 }
-.weather-data {
-  border: 1px solid green;
+.days-forecast {
+  margin: 10px;
+  height: 540px;
+  padding: 0;
+}
+.days-forecast h2 {
+  color: #012546;
+}
+.weather-cards {
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 0;
+}
+.card {
+  background: linear-gradient(315deg, #8794d8, #034279);
+  border: 1px solid rgb(225, 250, 225);
+  list-style-type: none;
+  width: 230px;
+  height: 440px;
+  font-size: 21px;
+  padding: 10px;
+  color: #94c0fd;
+  border-radius: 10px;
+  transition: 0.9s;
+}
+.card:hover {
+  margin: 10px;
 }
 .close-modal {
   display: flex;
   justify-content: end;
   margin-top: -40px;
+  cursor: pointer;
 }
-.current-weather {
-  border: 1px solid yellow;
-  flex: 1;
-  margin-left: 10px;
+.close-modal:hover {
+  opacity: 0.5;
 }
-.days-forecast {
-  border: 1px solid red;
-  flex: 2;
-}
-.weather-cards {
-  border: 1px solid blue;
+.mutare {
   display: flex;
+  justify-content: end;
+  margin-top: -30px;
+  margin-right: 20px;
+}
+.weather-input {
+  display: none;
 }
