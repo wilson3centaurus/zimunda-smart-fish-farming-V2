@@ -1,3 +1,5 @@
+const contactPoint = "sms"; // Default contact point is SMS. Set to "whatsapp" for WhatsApp notifications.
+
 function addNotification(message) {
   const notificationMessages = document.getElementById("notification-messages");
   const notificationIcon = document.getElementById("notification-icon");
@@ -17,8 +19,12 @@ function addNotification(message) {
   // Change notification icon to indicate there are new notifications
   notificationIcon.classList.add("has-notifications");
 
-  // Send WhatsApp message
-  sendWhatsAppMessage(message);
+  // Send notification based on the contact point
+  if (contactPoint === "whatsapp") {
+    sendWhatsAppMessage(message);
+  } else {
+    sendSMSMessage(message);
+  }
 }
 
 function checkNotifications() {
@@ -88,38 +94,80 @@ function checkSystem() {
 checkSystem();
 setInterval(checkSystem, 2000);
 
-function sendWhatsAppMessage(message) {
-  const accessToken = "EAALi0GGITnUBOwzce4OBI4oybx0EjNzPnUZApZCeDyJ9c5I0xDHSVPldmcgJAZCPcoSjd0ETsmHQZArFcqzmRsNZAQcjpx6Q7QACvNvcQiQZBO2chiGv79WPDGLc8fZB0QjOQzfTVxBPw53ZCo9DnPlQuIKmAZAt7wCceCEmluySkJHPEuJAnZBZAQHYZA5EjWsiUWjB4pfxrJovZClvfZBlpUZCOkZD";
-  const phoneNumberId = "312573365276673";
-  const recipientPhoneNumber = "263787209882";
+function sendSMSMessage(message) {
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "App 47582a78c971fce00a3be1d16baa1a1d-c9c128c1-7e4a-499e-a7d2-8c1a4f908bc3"
+  );
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
 
-  const url = `https://graph.facebook.com/v11.0/${phoneNumberId}/messages`;
-  const payload = {
-    messaging_product: "whatsapp",
-    to: recipientPhoneNumber,
-    type: "text",
-    text: {
-      body: message
-    }
+  const raw = JSON.stringify({
+    messages: [
+      {
+        destinations: [{ to: "263787209882" }],
+        from: "ServiceSMS",
+        text: message,
+      },
+    ],
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
   };
 
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${accessToken}`
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log("WhatsApp message sent:", data);
-  })
-  .catch(error => {
-    console.error("Error sending WhatsApp message:", error);
-  });
+  fetch("https://43px9n.api.infobip.com/sms/2/text/advanced", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error("Error sending SMS message:", error));
 }
 
+function sendWhatsAppMessage(message) {
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "App 47582a78c971fce00a3be1d16baa1a1d-c9c128c1-7e4a-499e-a7d2-8c1a4f908bc3"
+  );
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+
+  const raw = JSON.stringify({
+    messages: [
+      {
+        from: "447860099299",
+        to: "263787209882",
+        content: {
+          templateName: "message_test",
+          templateData: {
+            body: {
+              placeholders: [message],
+            },
+          },
+          language: "en",
+        },
+      },
+    ],
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(
+    "https://43px9n.api.infobip.com/whatsapp/1/message/template",
+    requestOptions
+  )
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error("Error sending WhatsApp message:", error));
+}
 
 // When the user clicks anywhere outside of the modal, close it
 let modal = document.getElementById("id01");

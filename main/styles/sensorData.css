@@ -23,11 +23,12 @@ p {
 }
 .sensor1,
 .sensor2 {
-  background-color: #16202e;
+  background-color: #181b1f;
   width: 200px;
   flex: 1;
   padding: 20px;
   margin: 5px;
+  border-radius: 7px;
 }
 .table-view {
   width: 550px;

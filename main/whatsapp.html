@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generate Google Maps Route</title>
+</head>
+<body>
+<div class="container">
+    <h1>Generate Google Maps Route</h1>
+    <button id="generateBtn">Generate Route</button>
+    <div id="result"></div>
+</div>
+<script>
+    document.getElementById('generateBtn').addEventListener('click', function() {
+        var origin = encodeURIComponent('Current Location');
+        var destination = encodeURIComponent('Mutare Polytechnic');
+        var url = 'https://www.google.com/maps/dir/?api=1&origin=' + origin + '&destination=' + destination;
+        document.getElementById('result').innerHTML = '<a href="' + url + '" target="_blank">' + url + '</a>';
+
+        
+fetch("https://43px9n.api.infobip.com/sms/2/text/advanced", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+
+        const accessToken = "EAALi0GGITnUBO49rUYFbCM42mQFCimLL0dhi61R7JNPYYaZBgVYFi0u9rgNo2eCWSWQIdFXkh6XBMKEq26kCZC3qYKelF6rxxp1sQA4PK9ZBjEro5c73PFp8WoZCv4GN9f9mcweiut4KyW2QcxBexxXRbPCcau3pZCvCtw1jYPQ9KIJgOWz50im2E5A4O0UZChBl9X0NVlgcr3amLN2BcZD";
+        const phoneNumberId = "312573365276673";
+        const phoneNumber = "+263787209882";
+        const message = `Here is your generated route: ${url}`;
+
+        fetch(`https://graph.facebook.com/v13.0/${phoneNumberId}/messages`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                messaging_product: 'whatsapp',
+                to: phoneNumber,
+                text: { body: message }
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error('Error sending message:', data.error);
+            } else {
+                console.log('Message sent successfully:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+</body>
+</html>
