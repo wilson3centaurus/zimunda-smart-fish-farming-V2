@@ -1,54 +1,135 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const waterLevelStatus = document.getElementById("water-level-status");
-  const wavesContainer = document.querySelector(".waves-container");
-  const containerHeight = document.querySelector(".container").offsetHeight;
+function addNotification(message) {
+  const notificationMessages = document.getElementById("notification-messages");
+  const notificationIcon = document.getElementById("notification-icon");
 
-  function setWaterLevel(percentage) {
-    // Clamp percentage between 0 and 100
-    percentage = Math.max(0, Math.min(percentage, 100));
-    // Calculate the height in pixels
-    const height = (containerHeight * percentage) / 100;
-
-    // Set the height of the waves container
-    wavesContainer.style.height = `${height}px`;
-
-    // Update water level status
-    if (percentage < 10) {
-      waterLevelStatus.textContent = "Water level status: Low";
-    } else if (percentage >= 95) {
-      waterLevelStatus.textContent = "Water level status: Overflow";
-    } else {
-      waterLevelStatus.textContent = "Water level status: Normal";
+  // Checking if the message already exists
+  for (let i = 0; i < notificationMessages.children.length; i++) {
+    if (notificationMessages.children[i].textContent.includes(message)) {
+      return; // If message exists, do not add another one
     }
   }
 
-  // Example usage: Animate water level change
-  function animateWaterLevel(start, end, duration) {
-    let startTime = null;
+  // Creating new notification element
+  const p = document.createElement("p");
+  p.innerHTML = `${message} <button onclick="this.parentElement.remove(); checkNotifications();">Clear</button>`;
+  notificationMessages.appendChild(p);
 
-    function animationStep(timestamp) {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / duration, 1);
+  // Change notification icon to indicate there are new notifications
+  notificationIcon.classList.add("has-notifications");
 
-      const currentLevel = start + (end - start) * progress;
-      setWaterLevel(currentLevel);
+  // Send WhatsApp message
+  sendWhatsAppMessage(message);
+}
 
-      if (progress < 1) {
-        requestAnimationFrame(animationStep);
+function checkNotifications() {
+  const notificationMessages = document.getElementById("notification-messages");
+  const notificationIcon = document.getElementById("notification-icon");
+
+  if (notificationMessages.children.length === 0) {
+    notificationIcon.classList.remove("has-notifications");
+  }
+}
+
+function checkServerState() {
+  const url = "http://localhost:5000/data";
+  const systemState = document.getElementById("systemState");
+
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Server is not running");
       }
-    }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Server is running");
+      systemState.innerText = "🟢Running";
+      removeNotification("🚨 System is down");
+      addNotification("✅ System is Up");
+      console.log("✅ System is Up");
+    })
+    .catch((error) => {
+      console.error(error.message);
+      systemState.innerText = "🔴Down";
+      addNotification("🚨 System is down");
+      removeNotification("✅ System is Up");
+      console.log("🚨 System is down");
+    });
+}
 
-    requestAnimationFrame(animationStep);
+function checkNetworkStatus() {
+  if (!navigator.onLine) {
+    addNotification("📡 Network is down");
+    addNotification("⛔ Weather information unavailable");
+    console.log("📡 Network is down");
+    console.log("⛔ Weather information unavailable");
+  } else {
+    removeNotification("📡 Network is down");
+    removeNotification("⛔ Real-time Weather information unavailable");
   }
+}
 
-  // Change this value to test different water levels (start, end, duration in ms)
-  animateWaterLevel(0, 50, 1000); // Example: animate from 0% to 50% over 2 seconds
-});
+function removeNotification(message) {
+  const notificationMessages = document.getElementById("notification-messages");
+  for (let i = 0; i < notificationMessages.children.length; i++) {
+    if (notificationMessages.children[i].textContent.includes(message)) {
+      notificationMessages.children[i].remove();
+      checkNotifications();
+      break;
+    }
+  }
+}
+
+function checkSystem() {
+  checkServerState();
+  checkNetworkStatus();
+}
+
+checkSystem();
+setInterval(checkSystem, 2000);
+
+function sendWhatsAppMessage(message) {
+  const accessToken = "EAALi0GGITnUBOwzce4OBI4oybx0EjNzPnUZApZCeDyJ9c5I0xDHSVPldmcgJAZCPcoSjd0ETsmHQZArFcqzmRsNZAQcjpx6Q7QACvNvcQiQZBO2chiGv79WPDGLc8fZB0QjOQzfTVxBPw53ZCo9DnPlQuIKmAZAt7wCceCEmluySkJHPEuJAnZBZAQHYZA5EjWsiUWjB4pfxrJovZClvfZBlpUZCOkZD";
+  const phoneNumberId = "312573365276673";
+  const recipientPhoneNumber = "263787209882";
+
+  const url = `https://graph.facebook.com/v11.0/${phoneNumberId}/messages`;
+  const payload = {
+    messaging_product: "whatsapp",
+    to: recipientPhoneNumber,
+    type: "text",
+    text: {
+      body: message
+    }
+  };
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${accessToken}`
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("WhatsApp message sent:", data);
+  })
+  .catch(error => {
+    console.error("Error sending WhatsApp message:", error);
+  });
+}
 
 
+// When the user clicks anywhere outside of the modal, close it
+let modal = document.getElementById("id01");
+let logoutModal = document.querySelector(".user-dropdown-modal");
 
-low = 240 | 244;
-normal = 170 | 174;
-high = 150 | 154;
-
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+  if (event.target == logoutModal) {
+    logoutModal.style.display = "none";
+  }
+};

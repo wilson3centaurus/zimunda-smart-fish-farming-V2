@@ -1,8 +1,16 @@
-const contactPoint = "whatsapp"; // Default contact point is SMS. Set to "whatsapp" for WhatsApp notifications.
+const contactPoint = "whatsapp";
 
 function addNotification(message) {
   const notificationMessages = document.getElementById("notification-messages");
   const notificationIcon = document.getElementById("notification-icon");
+
+  //console.log("Message: ", message);
+  //sendWhatsAppMessage(message);
+  if (contactPoint === "whatsapp") {
+    sendWhatsAppMessage(message);
+  } else {
+    sendSMSMessage(message);
+  }
 
   // Checking if the message already exists
   for (let i = 0; i < notificationMessages.children.length; i++) {
@@ -22,9 +30,9 @@ function addNotification(message) {
   // Send notification based on the contact point
   /*
   if (contactPoint === "whatsapp") {
-    sendWhatsAppMessage(message);
+    sendWhatsAppMessage(message); // Send the notification message to WhatsApp
   } else {
-    sendSMSMessage(message);
+    sendSMSMessage(message); // If using SMS, send the notification message to SMS
   }*/
 }
 
@@ -61,6 +69,7 @@ function checkServerState() {
       addNotification("🚨 System is down");
       removeNotification("✅ System is Up");
       console.log("🚨 System is down");
+      console.log("Message: ", message);
     });
 }
 
@@ -71,6 +80,8 @@ function checkNetworkStatus() {
     console.log("📡 Network is down");
     console.log("⛔ Weather information unavailable");
   } else {
+    addNotification("📡 Network has been restored");
+    addNotification("🌦️ Weather information available");
     removeNotification("📡 Network is down");
     removeNotification("⛔ Real-time Weather information unavailable");
   }
@@ -87,7 +98,7 @@ function removeNotification(message) {
   }
 }
 
-function checkSystem() {
+function checkSystem(message) {
   if (contactPoint === "whatsapp") {
     sendWhatsAppMessage(message);
     checkServerState();
@@ -97,6 +108,8 @@ function checkSystem() {
     checkServerState();
     checkNetworkStatus();
   }
+  checkServerState();
+  checkNetworkStatus();
 }
 
 checkSystem();
@@ -140,7 +153,7 @@ function sendSMSMessage(message) {
 }
 
 function sendWhatsAppMessage(message) {
-  console.log("Attempting to send WhatsApp message:", message);
+  console.log("Attempting to send WhatsApp message: ", message);
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -154,6 +167,7 @@ function sendWhatsAppMessage(message) {
       {
         from: "447860099299",
         to: "263787209882",
+        messageId: "437dda36-d24e-4a53-bba0-5b1f46ce26f7",
         content: {
           templateName: "message_test",
           templateData: {
