@@ -1,4 +1,4 @@
-const contactPoint = "sms"; // Default contact point is SMS. Set to "whatsapp" for WhatsApp notifications.
+const contactPoint = "whatsapp"; // Default contact point is SMS. Set to "whatsapp" for WhatsApp notifications.
 
 function addNotification(message) {
   const notificationMessages = document.getElementById("notification-messages");
@@ -20,11 +20,12 @@ function addNotification(message) {
   notificationIcon.classList.add("has-notifications");
 
   // Send notification based on the contact point
+  /*
   if (contactPoint === "whatsapp") {
     sendWhatsAppMessage(message);
   } else {
     sendSMSMessage(message);
-  }
+  }*/
 }
 
 function checkNotifications() {
@@ -55,7 +56,7 @@ function checkServerState() {
       console.log("✅ System is Up");
     })
     .catch((error) => {
-      console.error(error.message);
+      //console.error("Error checking server state:", error.message);
       systemState.innerText = "🔴Down";
       addNotification("🚨 System is down");
       removeNotification("✅ System is Up");
@@ -87,14 +88,22 @@ function removeNotification(message) {
 }
 
 function checkSystem() {
-  checkServerState();
-  checkNetworkStatus();
+  if (contactPoint === "whatsapp") {
+    sendWhatsAppMessage(message);
+    checkServerState();
+    checkNetworkStatus();
+  } else {
+    sendSMSMessage(message);
+    checkServerState();
+    checkNetworkStatus();
+  }
 }
 
 checkSystem();
 setInterval(checkSystem, 2000);
 
 function sendSMSMessage(message) {
+  console.log("Attempting to send SMS message:", message);
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -121,12 +130,17 @@ function sendSMSMessage(message) {
   };
 
   fetch("https://43px9n.api.infobip.com/sms/2/text/advanced", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.error("Error sending SMS message:", error));
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("SMS message sent:", result);
+    })
+    .catch((error) => {
+      console.error("Error sending SMS message:", error);
+    });
 }
 
 function sendWhatsAppMessage(message) {
+  console.log("Attempting to send WhatsApp message:", message);
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -164,9 +178,13 @@ function sendWhatsAppMessage(message) {
     "https://43px9n.api.infobip.com/whatsapp/1/message/template",
     requestOptions
   )
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.error("Error sending WhatsApp message:", error));
+    .then((response) => response.json())
+    .then((result) => {
+      console.log("WhatsApp message sent:", result);
+    })
+    .catch((error) => {
+      console.error("Error sending WhatsApp message:", error);
+    });
 }
 
 // When the user clicks anywhere outside of the modal, close it

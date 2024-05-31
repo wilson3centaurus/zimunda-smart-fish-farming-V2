@@ -2,115 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Water Wave Animation</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: #292929;
-        }
-
-        section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .waterContainer {
-            width: 200px;
-            height: 200px;
-            background-color: #80c5de;
-            border-radius: 0 0 40px 40px;
-            box-shadow: inset 0 0 50px #1c637c;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .waterContainer::before {
-            position: absolute;
-            content: '';
-            width: 200%;
-            height: 150%;
-            background-color: #ececec;
-            top: -150%;
-            left: -50%;
-            border-radius: 40%;
-            animation: wave 12s infinite linear;
-        }
-
-        .waterContainer::after {
-            position: absolute;
-            content: '';
-            width: 204%;
-            height: 154%;
-            background-color: #ececec80;
-            top: -150%;
-            left: -52%;
-            border-radius: 40%;
-            animation: wave 12s infinite linear;
-            animation-delay: 0.5s;
-        }
-
-        @keyframes wave {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        .waterLevelStatus {
-            color: red;
-            position: absolute;
-            top: 0;
-            margin-top: 250px;
-            z-index: 1;
-        }
-    </style>
+    <title>Proving Grounds</title>
 </head>
 <body>
-    <section>
-        <p class="waterLevelStatus">john</p>
-        <div class="waterContainer"></div>
-    </section>
+    <h1>Proving Grounds</h1>
+    <button>SEND</button>
+
     <script>
-        const low_1 = 240;
-        const low_2 = 244;
-        const normal_1 = 170;
-        const normal_2 = 174;
-        const high_1 = 150;
-        const high_2 = 154;
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", "App 47582a78c971fce00a3be1d16baa1a1d-c9c128c1-7e4a-499e-a7d2-8c1a4f908bc3");
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Accept", "application/json");
 
-        function setWaterHeight(beforeHeight, afterHeight) {
-            // Create or update the style element for ::before pseudo-element
-            let beforeStyle = document.getElementById('beforeStyle');
-            if (!beforeStyle) {
-                beforeStyle = document.createElement('style');
-                beforeStyle.id = 'beforeStyle';
-                document.head.appendChild(beforeStyle);
-            }
-            beforeStyle.innerHTML = `.waterContainer::before { height: ${beforeHeight}%; }`;
+        const raw = JSON.stringify({
+            "messages": [
+                {
+                    "from": "447860099299",
+                    "to": "263787209882",
+                    "messageId": "437dda36-d24e-4a53-bba0-5b1f46ce26f7",
+                    "content": {
+                        "templateName": "message_test",
+                        "templateData": {
+                            "body": {
+                                "placeholders": ["Wilson"]
+                            }
+                        },
+                        "language": "en"
+                    }
+                }
+            ]
+        });
 
-            // Create or update the style element for ::after pseudo-element
-            let afterStyle = document.getElementById('afterStyle');
-            if (!afterStyle) {
-                afterStyle = document.createElement('style');
-                afterStyle.id = 'afterStyle';
-                document.head.appendChild(afterStyle);
-            }
-            afterStyle.innerHTML = `.waterContainer::after { height: ${afterHeight}%; }`;
-        }
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
 
-        // Example usage:
-        setWaterHeight(normal_1, normal_2);
+        fetch("https://43px9n.api.infobip.com/whatsapp/1/message/template", requestOptions)
+            .then((response) => response.text())
+            .then((result) => console.log("Success!" + result))
+            .catch((error) => console.error("Error send message: " + error));
     </script>
 </body>
 </html>
