@@ -4,11 +4,11 @@ function addNotification(message) {
   const notificationMessages = document.getElementById("notification-messages");
   const notificationIcon = document.getElementById("notification-icon");
 
-  //console.log("Message: ", message);
-  //sendWhatsAppMessage(message);
   if (contactPoint === "whatsapp") {
     //sendWhatsAppMessage(message);
-  } else {
+    sendWhatsAppNotification(message);
+  }
+  if (contactPoint === "sms") {
     sendSMSMessage(message);
   }
 
@@ -97,22 +97,55 @@ function removeNotification(message) {
   }
 }
 
-function checkSystem(message) {
-  if (contactPoint === "whatsapp") {
-    //sendWhatsAppMessage(message);
-    checkServerState();
-    checkNetworkStatus();
-  } else {
-    sendSMSMessage(message);
-    checkServerState();
-    checkNetworkStatus();
-  }
+function checkSystem() {
   checkServerState();
   checkNetworkStatus();
+  sendWhatsAppNotification();
 }
 
 checkSystem();
-setInterval(checkSystem, 5000);
+setInterval(checkSystem, 10000);
+
+async function sendWhatsAppNotification(message) {
+  const accessToken =
+    "EAAPgkhFm2XUBO4VQ4zCrSnzdoPxBdMSsrHXFGtDWRbTCC17qZC7CfRUfIg4ZB73SFEXznCDgBbI2ZCfOKwjYLc4ZCJxxJu03IMIbT2FdnOhwvFKZBR2FzoTLBZCaPCUB1kRIEzyiNSlvFgILSg2u6TObU6GiUNVZBEh2xI2TXZClxLu5ZCodFEPtLDpFRRoXOV6jDa8g9DiIzXp5DfYFMtp4ZD";
+  const phoneNumberId = "356006700922401";
+  const recipientPhoneNumber = "263787209882";
+
+  const url = `https://graph.facebook.com/v16.0/${phoneNumberId}/messages`;
+
+  const body = {
+    messaging_product: "whatsapp",
+    to: recipientPhoneNumber,
+    type: "text",
+    text: {
+      body: message,
+    },
+  };
+
+  try {
+    console.log("Sending WhatsApp message:", message);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    const data = await response.json();
+    console.log("WhatsApp Response:", data);
+    if (data.error) {
+      console.error("Error sending WhatsApp message:", data.error.message);
+    } else {
+      console.log("WhatsApp message sent successfully");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
 
 function sendSMSMessage(message) {
   console.log("Attempting to send SMS message:", message);
