@@ -7,44 +7,46 @@
 </head>
 <body>
     <h1>Proving Grounds</h1>
-    <button>SEND</button>
+    <button id="show" class="btn">Click Me!</button>
+    <div id="message"></div>
 
     <script>
-        const myHeaders = new Headers();
-        //myHeaders.append("Authorization", "App 47582a78c971fce00a3be1d16baa1a1d-c9c128c1-7e4a-499e-a7d2-8c1a4f908bc3");
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Accept", "application/json");
+         (() => {
+            const message = document.querySelector('#message');
 
-        const raw = JSON.stringify({
-            "messages": [
-                {
-                    "from": "447860099299",
-                    "to": "263787209882",
-                    "messageId": "437dda36-d24e-4a53-bba0-5b1f46ce26f7",
-                    "content": {
-                        "templateName": "message_test",
-                        "templateData": {
-                            "body": {
-                                "placeholders": ["Wilson"]
-                            }
-                        },
-                        "language": "en"
-                    }
-                }
-            ]
-        });
+            // check if the Geolocation API is supported
+            if (!navigator.geolocation) {
+                message.textContent = `Your browser doesn't support Geolocation`;
+                message.classList.add('error');
+                return;
+            }
 
-        const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow"
-        };
+            // handle click event
+            const btn = document.querySelector('#show');
+            btn.addEventListener('click', function () {
+                // get the current position
+                navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            });
 
-        fetch("https://43px9n.api.infobip.com/whatsapp/1/message/template", requestOptions)
-            .then((response) => response.text())
-            .then((result) => console.log("Whatsapp messege sent Successfully!"))
-            .catch((error) => console.error("Error send message: " + error));
+
+            // handle success case
+            function onSuccess(position) {
+                const {
+                    latitude,
+                    longitude
+                } = position.coords;
+
+                message.classList.add('success');
+                message.textContent = `Your location: (${latitude},${longitude})`;
+            }
+
+            // handle error case
+            function onError() {
+                message.classList.add('error');
+                message.textContent = `Failed to get your location!`;
+            }
+        })();
     </script>
+        
 </body>
 </html>

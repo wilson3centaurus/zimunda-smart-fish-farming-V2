@@ -7,7 +7,7 @@ function addNotification(message) {
   //console.log("Message: ", message);
   //sendWhatsAppMessage(message);
   if (contactPoint === "whatsapp") {
-    sendWhatsAppMessage(message);
+    //sendWhatsAppMessage(message);
   } else {
     sendSMSMessage(message);
   }
@@ -69,7 +69,6 @@ function checkServerState() {
       addNotification("🚨 System is down");
       removeNotification("✅ System is Up");
       console.log("🚨 System is down");
-      console.log("Message: ", message);
     });
 }
 
@@ -100,7 +99,7 @@ function removeNotification(message) {
 
 function checkSystem(message) {
   if (contactPoint === "whatsapp") {
-    sendWhatsAppMessage(message);
+    //sendWhatsAppMessage(message);
     checkServerState();
     checkNetworkStatus();
   } else {
@@ -113,7 +112,7 @@ function checkSystem(message) {
 }
 
 checkSystem();
-setInterval(checkSystem, 2000);
+setInterval(checkSystem, 5000);
 
 function sendSMSMessage(message) {
   console.log("Attempting to send SMS message:", message);
