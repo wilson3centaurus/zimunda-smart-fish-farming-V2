@@ -1,4 +1,4 @@
-const contactPoint = "STOP";
+const contactPoint = "whatsapp";
 
 function addNotification(message) {
   const notificationMessages = document.getElementById("notification-messages");
@@ -103,11 +103,11 @@ function checkSystem() {
 }
 
 checkSystem();
-setInterval(checkSystem, 5000);
+setInterval(checkSystem, 10000);
 
 async function sendWhatsAppNotification(message) {
   const accessToken =
-    "EAAPgkhFm2XUBO4VQ4zCrSnzdoPxBdMSsrHXFGtDWRbTCC17qZC7CfRUfIg4ZB73SFEXznCDgBbI2ZCfOKwjYLc4ZCJxxJu03IMIbT2FdnOhwvFKZBR2FzoTLBZCaPCUB1kRIEzyiNSlvFgILSg2u6TObU6GiUNVZBEh2xI2TXZClxLu5ZCodFEPtLDpFRRoXOV6jDa8g9DiIzXp5DfYFMtp4ZD";
+    "EAAPgkhFm2XUBO0sESqErwCvHRgZCSBZAc9mYQpIGtZAOLgrZC3cFCTrodztgGj4s3JjOugEn3lAGXJyI5cFWr3oO5Ua60cmZB1DdoXZBTbOkfVa5K9OzckRCiaKpgjCyT3kOFh7fPjGy5ufhjwlnFhqo14040KUb5fZAyshWX5zqSrScJIvaB4WoWdqY2lgKiKMxboKs1AQ4ZC4wZBrf3viIZD";
   const phoneNumberId = "356006700922401";
   const recipientPhoneNumber = "263787209882";
 

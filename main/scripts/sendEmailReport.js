@@ -141,4 +141,4 @@ setInterval(() => {
   sendEmailReport("tafadzwawilsonsedze@gmail.com").catch((error) =>
     console.log("Error in sending the email report: ", error)
   );
-}, 60000); // 60000 milliseconds = 1 minute
+}, 20000); // 60000 milliseconds = 1 minute
