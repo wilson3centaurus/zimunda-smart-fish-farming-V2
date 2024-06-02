@@ -1,20 +1,21 @@
-const contactPoint = "STOP";
+const contactPoint = "sms"; // Default contact point is SMS. Set to "whatsapp" for WhatsApp notifications.
 
 function addNotification(message) {
+  console.log("Adding notification:", message);
   const notificationMessages = document.getElementById("notification-messages");
   const notificationIcon = document.getElementById("notification-icon");
 
+  // Send message based on contact point
   if (contactPoint === "whatsapp") {
     sendWhatsAppMessage(message);
-    //sendWhatsAppNotification(message);
-  }
-  if (contactPoint === "sms") {
+  } else if (contactPoint === "sms") {
     sendSMSMessage(message);
   }
 
   // Checking if the message already exists
   for (let i = 0; i < notificationMessages.children.length; i++) {
     if (notificationMessages.children[i].textContent.includes(message)) {
+      console.log("Notification already exists:", message);
       return; // If message exists, do not add another one
     }
   }
@@ -23,6 +24,7 @@ function addNotification(message) {
   const p = document.createElement("p");
   p.innerHTML = `${message} <button onclick="this.parentElement.remove(); checkNotifications();">Clear</button>`;
   notificationMessages.appendChild(p);
+  console.log("Notification added to DOM:", message);
 
   // Change notification icon to indicate there are new notifications
   notificationIcon.classList.add("has-notifications");
@@ -56,7 +58,7 @@ function checkServerState() {
       console.log("✅ System is Up");
     })
     .catch((error) => {
-      //console.error("Error checking server state:", error.message);
+      console.error("Error checking server state:", error.message);
       systemState.innerText = "🔴Down";
       addNotification("🚨 System is down");
       removeNotification("✅ System is Up");
@@ -72,7 +74,7 @@ function checkNetworkStatus() {
     console.log("⛔ Weather information unavailable");
   } else {
     removeNotification("📡 Network is down");
-    removeNotification("⛔ Real-time Weather information unavailable");
+    removeNotification("⛔ Weather information unavailable");
   }
 }
 
@@ -87,52 +89,58 @@ function removeNotification(message) {
   }
 }
 
-function checkSystem() {
-  console.log("checking now.....");
+function checkSystem(message) {
+  console.log("Checking system status...");
   checkServerState();
   checkNetworkStatus();
+  sendSMSMessage(message);
 }
 
-checkSystem();
-setInterval(checkSystem, 100000);
+async function sendWhatsAppMessage(message) {
+  console.log("Attempting to send WhatsApp message:", message);
+  const myHeaders = new Headers();
+  myHeaders.append(
+    "Authorization",
+    "App 47582a78c971fce00a3be1d16baa1a1d-c9c128c1-7e4a-499e-a7d2-8c1a4f908bc3"
+  );
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
 
-async function sendWhatsAppNotification(message) {
-  const accessToken =
-    "EAAPgkhFm2XUBO0sESqErwCvHRgZCSBZAc9mYQpIGtZAOLgrZC3cFCTrodztgGj4s3JjOugEn3lAGXJyI5cFWr3oO5Ua60cmZB1DdoXZBTbOkfVa5K9OzckRCiaKpgjCyT3kOFh7fPjGy5ufhjwlnFhqo14040KUb5fZAyshWX5zqSrScJIvaB4WoWdqY2lgKiKMxboKs1AQ4ZC4wZBrf3viIZD";
-  const phoneNumberId = "356006700922401";
-  const recipientPhoneNumber = "263787209882";
+  const raw = JSON.stringify({
+    messages: [
+      {
+        from: "447860099299",
+        to: "263787660665",
+        messageId: "437dda36-d24e-4a53-bba0-5b1f46ce26f7",
+        content: {
+          templateName: "message_test",
+          templateData: {
+            body: {
+              placeholders: [message],
+            },
+          },
+          language: "en",
+        },
+      },
+    ],
+  });
 
-  const url = `https://graph.facebook.com/v16.0/${phoneNumberId}/messages`;
-
-  const body = {
-    messaging_product: "whatsapp",
-    to: recipientPhoneNumber,
-    type: "text",
-    text: {
-      body: message,
-    },
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
   };
 
   try {
-    console.log("Sending WhatsApp message:", message);
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(body),
-    });
-
-    const data = await response.json();
-    console.log("WhatsApp Response:", data);
-    if (data.error) {
-      console.error("Error sending WhatsApp message:", data.error.message);
-    } else {
-      console.log("WhatsApp message sent successfully");
-    }
+    const response = await fetch(
+      "https://43px9n.api.infobip.com/whatsapp/1/message/template",
+      requestOptions
+    );
+    const result = await response.json();
+    console.log("WhatsApp message sent:", result);
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error sending WhatsApp message:", error);
   }
 }
 
@@ -173,55 +181,6 @@ function sendSMSMessage(message) {
     });
 }
 
-function sendWhatsAppMessage(message) {
-  console.log("Attempting to send WhatsApp message: ", message);
-  const myHeaders = new Headers();
-  myHeaders.append(
-    "Authorization",
-    "App 47582a78c971fce00a3be1d16baa1a1d-c9c128c1-7e4a-499e-a7d2-8c1a4f908bc3"
-  );
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Accept", "application/json");
-
-  const raw = JSON.stringify({
-    messages: [
-      {
-        from: "447860099299",
-        to: "263787209882",
-        messageId: "437dda36-d24e-4a53-bba0-5b1f46ce26f7",
-        content: {
-          templateName: "message_test",
-          templateData: {
-            body: {
-              placeholders: [message],
-            },
-          },
-          language: "en",
-        },
-      },
-    ],
-  });
-
-  const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: raw,
-    redirect: "follow",
-  };
-
-  fetch(
-    "https://43px9n.api.infobip.com/whatsapp/1/message/template",
-    requestOptions
-  )
-    .then((response) => response.json())
-    .then((result) => {
-      console.log("WhatsApp message sent:", result);
-    })
-    .catch((error) => {
-      console.error("Error sending WhatsApp message:", error);
-    });
-}
-
 // When the user clicks anywhere outside of the modal, close it
 let modal = document.getElementById("id01");
 let logoutModal = document.querySelector(".user-dropdown-modal");
@@ -234,3 +193,6 @@ window.onclick = function (event) {
     logoutModal.style.display = "none";
   }
 };
+
+checkSystem();
+setInterval(checkSystem, 10000); // Set interval to 10 seconds
