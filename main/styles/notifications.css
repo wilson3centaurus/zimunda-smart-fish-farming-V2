@@ -11,10 +11,10 @@
   display: none;
 }
 .notifications {
-  margin-left: 72%;
+  margin-left: 65%;
   background-color: #071f2e;
   height: auto;
-  width: 300px;
+  width: 398px;
 }
 .notifications p {
   color: #2c3e50;

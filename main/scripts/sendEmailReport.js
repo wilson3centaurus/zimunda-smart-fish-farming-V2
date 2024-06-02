@@ -120,9 +120,9 @@ async function sendEmailReport(toEmail) {
       "service_zgp0mlq",
       "template_fc944mn",
       {
-        to_email: toEmail, // Set recipient email dynamically
+        to_email: toEmail,
         subject: "Zimunda Estate Periodic Report",
-        message: report, // Send the HTML report as the message
+        message: report,
       },
       "TjEgClr9qDWlnGWn-"
     )

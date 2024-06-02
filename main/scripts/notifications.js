@@ -1,4 +1,4 @@
-const contactPoint = "whatsapp";
+const contactPoint = "STOP";
 
 function addNotification(message) {
   const notificationMessages = document.getElementById("notification-messages");
@@ -79,8 +79,6 @@ function checkNetworkStatus() {
     console.log("📡 Network is down");
     console.log("⛔ Weather information unavailable");
   } else {
-    addNotification("📡 Network has been restored");
-    addNotification("🌦️ Weather information available");
     removeNotification("📡 Network is down");
     removeNotification("⛔ Real-time Weather information unavailable");
   }
@@ -98,13 +96,14 @@ function removeNotification(message) {
 }
 
 function checkSystem() {
+  console.log("checking now.....");
   checkServerState();
   checkNetworkStatus();
-  sendWhatsAppNotification();
+  //sendWhatsAppNotification();
 }
 
 checkSystem();
-setInterval(checkSystem, 10000);
+setInterval(checkSystem, 5000);
 
 async function sendWhatsAppNotification(message) {
   const accessToken =
@@ -112,7 +111,7 @@ async function sendWhatsAppNotification(message) {
   const phoneNumberId = "356006700922401";
   const recipientPhoneNumber = "263787209882";
 
-  const url = `https://graph.facebook.com/v16.0/${phoneNumberId}/messages`;
+  //const url = `https://graph.facebook.com/v16.0/${phoneNumberId}/messages`;
 
   const body = {
     messaging_product: "whatsapp",
@@ -145,7 +144,6 @@ async function sendWhatsAppNotification(message) {
     console.error("Error:", error);
   }
 }
-
 
 function sendSMSMessage(message) {
   console.log("Attempting to send SMS message:", message);
