@@ -1,12 +1,12 @@
-const contactPoint = "whatsapp";
+const contactPoint = "STOP";
 
 function addNotification(message) {
   const notificationMessages = document.getElementById("notification-messages");
   const notificationIcon = document.getElementById("notification-icon");
 
   if (contactPoint === "whatsapp") {
-    //sendWhatsAppMessage(message);
-    sendWhatsAppNotification(message);
+    sendWhatsAppMessage(message);
+    //sendWhatsAppNotification(message);
   }
   if (contactPoint === "sms") {
     sendSMSMessage(message);
@@ -26,14 +26,6 @@ function addNotification(message) {
 
   // Change notification icon to indicate there are new notifications
   notificationIcon.classList.add("has-notifications");
-
-  // Send notification based on the contact point
-  /*
-  if (contactPoint === "whatsapp") {
-    sendWhatsAppMessage(message); // Send the notification message to WhatsApp
-  } else {
-    sendSMSMessage(message); // If using SMS, send the notification message to SMS
-  }*/
 }
 
 function checkNotifications() {
@@ -99,11 +91,10 @@ function checkSystem() {
   console.log("checking now.....");
   checkServerState();
   checkNetworkStatus();
-  //sendWhatsAppNotification();
 }
 
 checkSystem();
-setInterval(checkSystem, 10000);
+setInterval(checkSystem, 100000);
 
 async function sendWhatsAppNotification(message) {
   const accessToken =
@@ -111,7 +102,7 @@ async function sendWhatsAppNotification(message) {
   const phoneNumberId = "356006700922401";
   const recipientPhoneNumber = "263787209882";
 
-  //const url = `https://graph.facebook.com/v16.0/${phoneNumberId}/messages`;
+  const url = `https://graph.facebook.com/v16.0/${phoneNumberId}/messages`;
 
   const body = {
     messaging_product: "whatsapp",
