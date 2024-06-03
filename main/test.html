@@ -1,52 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proving Grounds</title>
+  <title>Asthma Monitoring Dashboard</title>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
 </head>
 <body>
-    <h1>Proving Grounds</h1>
-    <button id="show" class="btn">Click Me!</button>
-    <div id="message"></div>
 
-    <script>
-         (() => {
-            const message = document.querySelector('#message');
+<div id="data-display">
+  <h1>Asthma Monitoring Dashboard</h1>
+  <p>Latest CO Reading: <span id="latest-reading"></span></p>
+  <p>Uptime: <span id="uptime"></span></p>
+  <p>Latest Timestamp: <span id="latest-timestamp"></span></p>
+  <p>Highest Reading: <span id="highest-reading"></span></p>
+  <p>Lowest Reading: <span id="lowest-reading"></span></p>
+  <p>Average Reading: <span id="average-reading"></span></p>
+</div>
 
-            // check if the Geolocation API is supported
-            if (!navigator.geolocation) {
-                message.textContent = `Your browser doesn't support Geolocation`;
-                message.classList.add('error');
-                return;
-            }
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyB1-10YzT4Lnzwxjg5W7-OygeJAr96h7Vk",
+    authDomain: "asthma-monitoring-device.firebaseapp.com",
+    databaseURL: "https://asthma-monitoring-device-default-rtdb.firebaseio.com",
+    projectId: "asthma-monitoring-device",
+    storageBucket: "asthma-monitoring-device.appspot.com",
+    messagingSenderId: "257129803241",
+    appId: "1:257129803241:web:2f5c4ddc20743bac98ef78",
+    measurementId: "G-SM5DGYF8LK"
+  };
 
-            // handle click event
-            const btn = document.querySelector('#show');
-            btn.addEventListener('click', function () {
-                // get the current position
-                navigator.geolocation.getCurrentPosition(onSuccess, onError);
-            });
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
+  const dbRef = firebase.database().ref('/CO_sensor_data');
 
-            // handle success case
-            function onSuccess(position) {
-                const {
-                    latitude,
-                    longitude
-                } = position.coords;
+  dbRef.on('value', (snapshot) => {
+    const data = snapshot.val();
+    processData(data);
+  });
 
-                message.classList.add('success');
-                message.textContent = `Your location: (${latitude},${longitude})`;
-            }
+  function processData(data) {
+    let latestReading = null;
+    let latestTimestamp = null;
+    let highestReading = Number.NEGATIVE_INFINITY;
+    let lowestReading = Number.POSITIVE_INFINITY;
+    let totalReading = 0;
+    let count = 0;
 
-            // handle error case
-            function onError() {
-                message.classList.add('error');
-                message.textContent = `Failed to get your location!`;
-            }
-        })();
-    </script>
-        
+    for (const key in data) {
+      const entry = data[key];
+      const reading = parseFloat(entry.CO_level);
+      const timestamp = new Date(entry.timestamp);
+
+      if (!latestTimestamp || timestamp > latestTimestamp) {
+        latestTimestamp = timestamp;
+        latestReading = reading;
+      }
+
+      if (reading > highestReading) {
+        highestReading = reading;
+      }
+
+      if (reading < lowestReading) {
+        lowestReading = reading;
+      }
+
+      totalReading += reading;
+      count++;
+    }
+
+    const averageReading = totalReading / count;
+    const currentTimestamp = new Date();
+    const uptime = Math.floor((currentTimestamp - latestTimestamp) / 1000); // in seconds
+
+    document.getElementById('latest-reading').textContent = latestReading.toFixed(2);
+    document.getElementById('uptime').textContent = `${uptime} seconds`;
+    document.getElementById('latest-timestamp').textContent = latestTimestamp.toISOString();
+    document.getElementById('highest-reading').textContent = highestReading.toFixed(2);
+    document.getElementById('lowest-reading').textContent = lowestReading.toFixed(2);
+    document.getElementById('average-reading').textContent = averageReading.toFixed(2);
+  }
+</script>
+
 </body>
 </html>

@@ -4,7 +4,7 @@ import {
   get,
 } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-import emailjs from "https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js";
+//import emailjs from "https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -141,4 +141,4 @@ setInterval(() => {
   sendEmailReport("tafadzwawilsonsedze@gmail.com").catch((error) =>
     console.log("Error in sending the email report: ", error)
   );
-}, 20000); // 60000 milliseconds = 1 minute
+}, 60000); // 60000 milliseconds = 1 minute
