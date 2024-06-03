@@ -78,4 +78,4 @@ function toggleWeatherContainer() {
 function featureDev() {
   Swal.fire("⚠️Feature still in Development⚒️");
 };
- 
+

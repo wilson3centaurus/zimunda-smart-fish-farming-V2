@@ -30,7 +30,7 @@ async function getDataFromFirebase() {
           });
         }
       });
-      data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)); // Sort by earliest first
+      data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
       return data;
     } else {
       console.log("No temperature data available.");
