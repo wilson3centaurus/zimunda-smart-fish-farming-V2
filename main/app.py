@@ -54,7 +54,7 @@ def get_data():
                 time_str = value["timestamp"]
                 time_obj = datetime.strptime(time_str, "%Y-%m-%d %H:%M:%S")  # Converting string to datetime object
                 iso_time = time_obj.strftime("%Y-%m-%d %H:%M:%S")  # Custom formatting without "T"
-                data.append({"timestamp": iso_time, "celsius": value["celsius"]})
+                data.append({"timestamp": iso_time, "temperature": value["temperature"]})
         data.sort(key=lambda x: x["timestamp"], reverse=True)  # Sort by latest first
     return jsonify({"temperature": data})
 
@@ -62,7 +62,7 @@ def get_data():
 @app.route("/")
 def index():
     temperature_data = {
-        "celsius": 23.45,
+        "temperature": 23.45,
         "timestamp": datetime.now()  # Store timestamp as datetime object
     }
     db.child("temperature").push(temperature_data)
@@ -72,21 +72,21 @@ def index():
     if temperatures:
         for key, value in temperatures.items():
             if "timestamp" in value:
-                data.append({"timestamp": value["timestamp"], "celsius": value["celsius"]})
+                data.append({"timestamp": value["timestamp"], "temperature": value["temperature"]})
         data.sort(key=lambda x: x["timestamp"], reverse=True)  # Sort by latest first
-        celsius = data[0]["celsius"]
+        temperature = data[0]["temperature"]
     else:
-        celsius = None
+        temperature = None
 
     # Prepare data for Grafana JSON data source
     grafana_data = prepare_data_for_grafana(data)
     send_to_grafana(grafana_data)
 
-    return jsonify({"celsius": celsius, "data": data})
+    return jsonify({"temperature": temperature, "data": data})
 
 
 def prepare_data_for_grafana(data):
-    return [{"time": d["timestamp"], "value": d["celsius"]} for d in data]
+    return [{"time": d["timestamp"], "value": d["temperature"]} for d in data]
 
 if __name__ == "__main__":
     app.run(debug=True)
