@@ -46,9 +46,9 @@ async function generateReportAndPrompt() {
     const jsonData = JSON.stringify(data, null, 2);
 
     const temperatures = Object.values(data.temperature).map(
-      ({ celsius, timestamp }) => ({
+      ({ temperature, timestamp }) => ({
         timestamp: new Date(timestamp),
-        temperature: celsius,
+        temperature: temperature,
       })
     );
 
@@ -71,7 +71,7 @@ async function generateReportAndPrompt() {
         <h1 style="margin: 0; color: #2196f3;">Zimunda Estate</h1>
         <h2 style="margin: 0; font-weight: normal; color: #9e9e9e;">Periodic Report</h2>
       </div>
-      <img src="/main/images/logo-transparent.png" alt="Zimunda Estate Logo" style="height: 80px;">
+      <img src="/main/zimunda-icon.png" alt="Zimunda Estate Logo" style="height: 80px;">
     </div>
 
     <hr style="border: 1px solid #ddd; margin: 20px 0;">
@@ -161,6 +161,10 @@ The majority of the temperature readings \(</span>{
   </div>
 `;
 
+    const loader = document.querySelector(".loader-container");
+
+    loader.style.display = "none";
+
     Swal.fire({
       title: "Report Generated",
       text: "Do you want to download or print the report?",
@@ -224,3 +228,4 @@ function htmlToPdf(html) {
 document
   .querySelector(".generateReport")
   .addEventListener("click", generateReportAndPrompt);
+  

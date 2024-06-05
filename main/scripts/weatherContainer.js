@@ -41,9 +41,6 @@ function displayForecast(weatherData) {
       .toLocaleString("en-us", { weekday: "short" })
       .toUpperCase();
     dayTemp.textContent = `${Math.round(dayData.main.temp)}°`;
-    /*dayIcon.innerHTML = `<i class="bi bi-${getWeatherIcon(
-    dayData.weather[0].id
-    )}"></i>`;*/
   }
 }
 

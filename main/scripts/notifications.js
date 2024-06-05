@@ -1,4 +1,4 @@
-const contactPoint = "sms"; // Default contact point is SMS. Set to "whatsapp" for WhatsApp notifications.
+const contactPoint = "sms";
 
 function addNotification(message) {
   console.log("Adding notification:", message);

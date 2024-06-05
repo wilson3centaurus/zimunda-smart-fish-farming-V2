@@ -103,8 +103,13 @@
     </p>
     <!--========= Main =========-->
     <div class="repoemain">
-        <button class="add-sensor generateReport">Generate Report</button>
-    </div>
+  <button class="add-sensor generateReport">Generate Report</button>
+  <div class="loader-container">
+    <div class="circle-loader"></div>
+    <p class="loader-text">generating...</p>
+  </div>
+</div>
+
 
     <!--====== End of Main ======-->
     <hr class="bottom-line" />
@@ -122,6 +127,18 @@
     <script
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+      
+    </script>
+    <script>
+      
+      const generateReport = document.querySelector(".add-sensor");
+      const loader = document.querySelector(".loader-container");
+
+      generateReport.addEventListener("click", function () {
+        loader.style.display = "block";
+      });
+    
+    
     </script>
   </body>
 </html>

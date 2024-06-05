@@ -9,3 +9,36 @@
 .generateReport:hover {
   border: 3px rgb(153, 0, 255) solid;
 }
+
+body {
+  overflow: hidden;
+}
+.loader-container {
+  text-align: center;
+  margin-top: 20px;
+  margin-top: -270px;
+  margin-bottom: 210px;
+  display: none;
+}
+
+.circle-loader {
+  border: 8px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #455770;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+  color: #455770;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 14px;
+}

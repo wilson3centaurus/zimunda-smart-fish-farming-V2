@@ -23,8 +23,8 @@ function setWaterHeight(beforeHeight, afterHeight) {
   afterStyle.innerHTML = `.waterContainer::after { height: ${afterHeight}%; }`;
 }
 
-let waterLevel1 = normal_1;
-let waterLevel2 = normal_2;
+let waterLevel1 = low_1;
+let waterLevel2 = low_2;
 
 setWaterHeight(waterLevel1, waterLevel2);
 

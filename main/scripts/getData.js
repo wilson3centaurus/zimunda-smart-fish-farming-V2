@@ -10,7 +10,7 @@ const firebaseConfig = {
 };
 
 const TEMP_THRESHOLD_LOW = 18;
-const TEMP_THRESHOLD_HIGH = 25;
+const TEMP_THRESHOLD_HIGH = 30;
 
 async function getDataFromFirebase() {
   try {
@@ -26,7 +26,7 @@ async function getDataFromFirebase() {
         if (value.timestamp) {
           data.push({
             timestamp: value.timestamp,
-            celsius: value.celsius,
+            temperature: value.temperature,
           });
         }
       });
@@ -48,7 +48,7 @@ async function displayData() {
     if (data.length > 0) {
       const latest = data[data.length - 1];
       const first = data[0];
-      const latestTemp = latest.celsius;
+      const latestTemp = latest.temperature;
       const latestTimestamp = latest.timestamp;
       const uptime =
         (new Date(latestTimestamp) - new Date(first.timestamp)) / 1000; // uptime in seconds
@@ -75,8 +75,8 @@ async function displayData() {
       const thresholdDisplay = document.getElementById("thresholdDisplay");
       if (lastUpdate) lastUpdate.innerText = `${latestTimestamp}`;
       if (upTime) upTime.innerText = `${uptimeString}`;
-      if (thresholdDisplay) thresholdDisplay.innerText = `Temp Threshold: ${TEMP_THRESHOLD_LOW}°C - ${TEMP_THRESHOLD_HIGH}°C`;
-      
+      if (thresholdDisplay)
+        thresholdDisplay.innerText = `Temp Threshold: ${TEMP_THRESHOLD_LOW}°C - ${TEMP_THRESHOLD_HIGH}°C`;
     } else {
       console.log("No data available.");
       const myDiv = document.getElementById("myDiv");
@@ -96,7 +96,7 @@ async function displayData() {
 // Notification functions (assuming these are the same as in notifications.js)
 async function sendWhatsAppNotification(message) {
   const accessToken =
-    "EAALi0GGITnUBOwzce4OBI4oybx0EjNzPnUZApZCeDyJ9c5I0xDHSVPldmcgJAZCPcoSjd0ETsmHQZArFcqzmRsNZAQcjpx6Q7QACvNvcQiQZBO2chiGv79WPDGLc8fZB0QjOQzfTVxBPw53ZCo9DnPlQuIKmAZAt7wCceCEmluySkJHPEuJAnZBZAQHYZA5EjWsiUWjB4pfxrJovZClvfZBlpUZCOkZD";
+    "EAALi0GGITnUBO2mEd3SCAQzL0jyVwihD0LkAhC2GT6JE8hDXIRXpX6wlQ8mOvqzgumoWa444G9rqSA1aU4IBZAkerkFMfhcrFiiEUZAj6E36mxlDhRjnd1ZA7sGR6SSXI7CtYjTkTFdpgjRpRv1gYm9dYrPSY9IgbIy4QzZCzsOoPK7ILZBXCZApuPXFR7l3YbTZAfZBe53gZCuu8fAFoBnLr";
   const phoneNumberId = "312573365276673";
   const recipientPhoneNumber = "263787209882";
 

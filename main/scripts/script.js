@@ -79,3 +79,12 @@ function featureDev() {
   Swal.fire("⚠️Feature still in Development⚒️");
 };
 
+function showGenerating() {
+  const generateReport = document.querySelector(".generateReport");
+  const loader = document.querySelector(".loader-container");
+
+  generateReport.addEventListener("click", function () {
+    //loader.style.display = "block";
+    alert('');
+  });
+}

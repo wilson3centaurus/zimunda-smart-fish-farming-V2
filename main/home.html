@@ -18,6 +18,11 @@
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/home.css" />
     <link rel="stylesheet" href="styles/weatherModal.css">
+    <link rel="stylesheet" href="styles/pondview.css" />
+    <link rel="stylesheet" href="styles/notifications.css" />
+    <link rel="stylesheet" href="styles/account.css" />
+    <link rel="stylesheet" href="./styles/waterLevel.css">
+    <link rel="stylesheet" href="./styles/pumpSwitch.css">
     <link rel="icon" href="zimunda-icon.png" type="icon" />
   </head>
   <body>
@@ -59,7 +64,6 @@
           <ul class="nav-date">
             <li><a href="#about" class="currentDate"></a></li>
           </ul>
-
           <ul class="account">
             <li>
               <i
@@ -68,11 +72,44 @@
               ></i>
             </li>
             <li>
-              <i class="fas fa-cog icon-style" id="user-dropdown-toggle"></i>
+              <i
+                class="fas fa-bell icon-style notification-icon"
+                id="light-dark-toggle"
+                onclick="document.getElementById('id01').style.display='block'"
+              ></i>
+              <!-- The Notifications Modal -->
+              <div id="id01" class="modal">
+                <span
+                  onclick="document.getElementById('id01').style.display='none'"
+                  class="bi bi-x-square-fill close"
+                  title="Close Modal"
+                  ></span
+                >
+
+                <!-- Modal Content -->
+                <div class="notifications">
+                  <h3 class="fas fa-bell">Notifications:</h3>
+                  <div id="notification-messages"></div>
+                </div>
+              </div>
             </li>
             <li>
-              <i class="fas fa-user icon-style" id="user-dropdown-toggle"></i>
+              <i class="fas fa-cog icon-style" id="user-dropdown-toggle" onclick="featureDev()"></i>
             </li>
+            <li>
+              <i
+                class="fas fa-user icon-style"
+                id="user-dropdown-toggle"
+                onclick="document.querySelector('.user-dropdown-modal').style.display='flex'"
+              ></i>
+            </li>
+            <!-- User Dropdown Modal -->
+            <div class="user-dropdown-modal">
+              <div class="logout-container">
+                <p>Account</p>
+                <button class="logout">Logout</button>
+              </div>
+            </div>
           </ul>
         </ul>
       </nav>
@@ -136,8 +173,8 @@
             Messages Prefences
             <br />
           </a>
-          <a class="notifications" href="">
-            New Notifications <span class="span2">3</span>
+          <a class="notifications1" onclick="document.getElementById('id01').style.display='block'" href="">
+            New Notifications <span class="span2">0</span>
           </a>
         </div>
       </div>

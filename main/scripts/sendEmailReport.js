@@ -40,9 +40,9 @@ async function generateReport() {
   try {
     const data = await getDatabaseJSON(dataPath);
     const temperatures = Object.values(data.temperature).map(
-      ({ celsius, timestamp }) => ({
+      ({ temperature, timestamp }) => ({
         timestamp: new Date(timestamp),
-        temperature: celsius,
+        temperature: temperature,
       })
     );
 
@@ -59,7 +59,7 @@ async function generateReport() {
             <h1 style="margin: 0; color: #2196f3;">Zimunda Estate</h1>
             <h2 style="margin: 0; font-weight: normal; color: #9e9e9e;">Periodic Report</h2>
           </div>
-          <img src="/main/images/logo-transparent.png" alt="Zimunda Estate Logo" style="height: 80px;">
+          <img src="/main/zimunda-icon.png" alt="Zimunda Estate Logo" style="height: 80px;">
         </div>
         <hr style="border: 1px solid #ddd; margin: 20px 0;">
         <h3 style="text-align: center; color: #2196f3;">Temperature Report</h3>
@@ -141,4 +141,4 @@ setInterval(() => {
   sendEmailReport("tafadzwawilsonsedze@gmail.com").catch((error) =>
     console.log("Error in sending the email report: ", error)
   );
-}, 60000); // 60000 milliseconds = 1 minute
+}, 600000); // 60000 milliseconds = 1 minute
