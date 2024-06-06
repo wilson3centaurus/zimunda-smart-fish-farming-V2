@@ -5,6 +5,7 @@ import requests
 import json
 # from flask_cors import CORS
 
+
 # Firebase configuration
 config = {
     "apiKey": "AIzaSyDnG1Kr_vUrdoVcE2SAbzEiG-tBPSe6-kw",
@@ -21,7 +22,6 @@ firebase = pyrebase.initialize_app(config)
 db = firebase.database()
 
 app = Flask(__name__)
-# CORS(app)
 
 class CustomJSONEncoder(json.JSONEncoder):
     def default(self, obj):
