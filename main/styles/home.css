@@ -141,6 +141,23 @@ nav a {
   border-radius: 5px;
   border: 1px solid rgba(45, 49, 59, 0.5);
 }
+.wilson {
+  padding: 20px;
+  width: 340px;
+  height: 30px;
+  text-align: start;
+  background-color: #14171b;
+  border-radius: 5px;
+  border: 1px solid rgba(45, 49, 59, 0.5);
+  list-style: none;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  font-size: 19px;
+  margin-bottom: 10px;
+  text-decoration: none;
+}
 .span1,
 .span2 {
   text-align: end;
@@ -163,6 +180,9 @@ nav a {
 .notifications:hover {
   opacity: 0.6;
 }
+.wilson:hover {
+  opacity: 0.6;
+}
 
 .footer-text {
   color: #8392a5;
@@ -173,9 +193,12 @@ nav a {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 0px;
+  margin-top: 100px;
   margin-bottom: -11px;
   text-align: center;
+  bottom: 0;
+  margin: 0 auto;
+  margin-bottom: -40px;
 }
 .weather-container {
   display: flex;

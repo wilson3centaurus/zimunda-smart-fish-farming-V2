@@ -1,7 +1,7 @@
 const contactPoint = "sms";
 
 function addNotification(message) {
-  console.log("Adding notification:", message);
+  //console.log("Adding notification:", message);
   const notificationMessages = document.getElementById("notification-messages");
   const notificationIcon = document.getElementById("notification-icon");
 
@@ -15,7 +15,7 @@ function addNotification(message) {
   // Checking if the message already exists
   for (let i = 0; i < notificationMessages.children.length; i++) {
     if (notificationMessages.children[i].textContent.includes(message)) {
-      console.log("Notification already exists:", message);
+      //console.log("Notification already exists:", message);
       return; // If message exists, do not add another one
     }
   }
@@ -24,7 +24,7 @@ function addNotification(message) {
   const p = document.createElement("p");
   p.innerHTML = `${message} <button onclick="this.parentElement.remove(); checkNotifications();">Clear</button>`;
   notificationMessages.appendChild(p);
-  console.log("Notification added to DOM:", message);
+  //console.log("Notification added to DOM:", message);
 
   // Change notification icon to indicate there are new notifications
   notificationIcon.classList.add("has-notifications");
@@ -51,18 +51,18 @@ function checkServerState() {
       return response.json();
     })
     .then((data) => {
-      console.log("Server is running");
+      //console.log("Server is running");
       systemState.innerText = "🟢Running";
       removeNotification("🚨 System is down");
       addNotification("✅ System is Up");
-      console.log("✅ System is Up");
+      //console.log("✅ System is Up");
     })
     .catch((error) => {
       console.error("Error checking server state:", error.message);
       systemState.innerText = "🔴Down";
       addNotification("🚨 System is down");
       removeNotification("✅ System is Up");
-      console.log("🚨 System is down");
+      //console.log("🚨 System is down");
     });
 }
 
@@ -70,8 +70,8 @@ function checkNetworkStatus() {
   if (!navigator.onLine) {
     addNotification("📡 Network is down");
     addNotification("⛔ Weather information unavailable");
-    console.log("📡 Network is down");
-    console.log("⛔ Weather information unavailable");
+    //console.log("📡 Network is down");
+    //console.log("⛔ Weather information unavailable");
   } else {
     removeNotification("📡 Network is down");
     removeNotification("⛔ Weather information unavailable");
@@ -97,7 +97,7 @@ function checkSystem(message) {
 }
 
 async function sendWhatsAppMessage(message) {
-  console.log("Attempting to send WhatsApp message:", message);
+  //console.log("Attempting to send WhatsApp message:", message);
   const myHeaders = new Headers();
   myHeaders.append(
     "Authorization",
@@ -157,7 +157,7 @@ function sendSMSMessage(message) {
   const raw = JSON.stringify({
     messages: [
       {
-        destinations: [{ to: "263787209882" }],
+        destinations: [{ to: "263713126147" }],
         from: "ServiceSMS",
         text: message,
       },
@@ -193,6 +193,7 @@ window.onclick = function (event) {
     logoutModal.style.display = "none";
   }
 };
+
 
 checkSystem();
 setInterval(checkSystem, 10000); // Set interval to 10 seconds

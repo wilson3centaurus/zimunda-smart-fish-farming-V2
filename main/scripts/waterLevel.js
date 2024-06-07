@@ -23,8 +23,8 @@ function setWaterHeight(beforeHeight, afterHeight) {
   afterStyle.innerHTML = `.waterContainer::after { height: ${afterHeight}%; }`;
 }
 
-let waterLevel1 = low_1;
-let waterLevel2 = low_2;
+let waterLevel1 = normal_1;
+let waterLevel2 = normal_2;
 
 setWaterHeight(waterLevel1, waterLevel2);
 
@@ -83,4 +83,43 @@ document.addEventListener("DOMContentLoaded", function () {
   pump2Switch.addEventListener("change", function () {
     updatePumpStatus(pump2Switch, pump2Status);
   });
+});
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDnG1Kr_vUrdoVcE2SAbzEiG-tBPSe6-kw",
+  authDomain: "zimunda-sensor-data.firebaseapp.com",
+  databaseURL: "https://zimunda-sensor-data-default-rtdb.firebaseio.com",
+  projectId: "zimunda-sensor-data",
+  storageBucket: "zimunda-sensor-data.appspot.com",
+  messagingSenderId: "260289735455",
+  appId: "1:260289735455:web:c70d169bc8b86945cb1e2a",
+  measurementId: "G-WFH79MCPNP",
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Reference to Firebase database
+const dbRef = firebase.database().ref("/sensor_data");
+
+// Function to set water levels based on Firebase data
+function setWaterLevels(waterLevel) {
+  let waterLevel1, waterLevel2;
+
+  if (waterLevel === 1) {
+    waterLevel1 = normal_1;
+    waterLevel2 = normal_2;
+  } else {
+    waterLevel1 = low_1;
+    waterLevel2 = low_2;
+  }
+
+  setWaterHeight(waterLevel1, waterLevel2);
+}
+
+// Listen for changes in water level in Firebase
+dbRef.child("water_level").on("value", (snapshot) => {
+  const waterLevel = snapshot.val();
+  setWaterLevels(waterLevel);
 });

@@ -45,7 +45,7 @@ async function generateReportAndPrompt() {
     const data = await getDatabaseJSON(dataPath);
     const jsonData = JSON.stringify(data, null, 2);
 
-    const temperatures = Object.values(data.temperature).map(
+    const temperatures = Object.values(data.sensor_data).map(
       ({ temperature, timestamp }) => ({
         timestamp: new Date(timestamp),
         temperature: temperature,
@@ -108,7 +108,7 @@ async function generateReportAndPrompt() {
     <h2 style="color: #2196f3;">Initial Readings:</h2>
 
     <p><strong>Timestamp:</strong> ${temperatures[0].timestamp.toLocaleString()}</p>
-    <p><strong>Temperature:</strong> <span class="math-inline">\{temperatures\[0\]\.temperature\.toFixed\(3\)\}°C</p\>
+    <p><strong>Temperature:</strong> <span class="math-inline">\{sensor_data\[0\]\.temperature\.toFixed\(3\)\}°C</p\>
 <p style\="color\: \#2196f3;"\><strong\>Subsequent Readings\:</strong\></p\>
 <h2 style\="color\: \#2196f3;"\>Analysis</h2\>
 <p\><strong\>Consistency in Temperature\:</strong\></p\>

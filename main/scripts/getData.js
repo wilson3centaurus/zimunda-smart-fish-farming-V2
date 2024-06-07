@@ -1,3 +1,4 @@
+/*
 const firebaseConfig = {
   apiKey: "AIzaSyDnG1Kr_vUrdoVcE2SAbzEiG-tBPSe6-kw",
   authDomain: "zimunda-sensor-data.firebaseapp.com",
@@ -7,7 +8,7 @@ const firebaseConfig = {
   messagingSenderId: "260289735455",
   appId: "1:260289735455:web:c70d169bc8b86945cb1e2a",
   measurementId: "G-WFH79MCPNP",
-};
+};*/
 
 const TEMP_THRESHOLD_LOW = 18;
 const TEMP_THRESHOLD_HIGH = 30;
