@@ -16,7 +16,7 @@ const TEMP_THRESHOLD_HIGH = 30;
 async function getDataFromFirebase() {
   try {
     const response = await fetch(
-      "https://zimunda-sensor-data-default-rtdb.firebaseio.com/temperature.json"
+      "https://zimunda-sensor-data-default-rtdb.firebaseio.com/sensor_data.json"
     );
     const temperatures = await response.json();
     const data = [];
