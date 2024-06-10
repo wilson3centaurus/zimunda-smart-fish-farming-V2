@@ -86,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Firebase configuration
+/*
 const firebaseConfig = {
   apiKey: "AIzaSyDnG1Kr_vUrdoVcE2SAbzEiG-tBPSe6-kw",
   authDomain: "zimunda-sensor-data.firebaseapp.com",
@@ -102,7 +103,7 @@ firebase.initializeApp(firebaseConfig);
 
 // Reference to Firebase database
 const dbRef = firebase.database().ref("/sensor_data");
-
+*/
 // Function to set water levels based on Firebase data
 function setWaterLevels(waterLevel) {
   let waterLevel1, waterLevel2;
