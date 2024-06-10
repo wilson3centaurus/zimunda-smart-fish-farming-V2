@@ -98,15 +98,29 @@ async function displayData() {
       let waterLevelStatus = document.querySelector(".waterLevelStatus");
 
       function updateWaterLevelStatus() {
+        // Get references to the checkboxes and status elements
         const pump1Switch = document.getElementById("pump1-switch");
         const pump2Switch = document.getElementById("pump2-switch");
+        const pump1Status = document.getElementById("pump1-status");
+        const pump2Status = document.getElementById("pump2-status");
+
+        // Function to update the pump status based on the checkbox state
+        function updatePumpStatus(pumpSwitch, pumpStatus) {
+          if (pumpSwitch.checked) {
+            pumpStatus.textContent = "🟢running";
+          } else {
+            pumpStatus.textContent = "🔴stopped";
+          }
+        }
 
         if (waterLevel1 === low_1 || waterLevel2 === low_2) {
           waterLevelStatus.innerHTML = "⚠️Low Water Level!";
           waterLevelStatus.style.color = "red";
+          updatePumpStatus(pump1Switch, pump1Status);
+          updatePumpStatus(pump2Switch, pump2Status);
           // Open inlet pump, close outlet pump
-          //document.getElementById("pump1-switch").checked = true;
-          //document.getElementById("pump2-switch").checked = false;
+          document.getElementById("pump1-switch").checked = true;
+          document.getElementById("pump2-switch").checked = false;
           if (pump1ManualState === null) {
             document.getElementById("pump1-switch").checked = true;
           }
@@ -117,18 +131,32 @@ async function displayData() {
           waterLevelStatus.innerHTML = "😴Normal Water Level🏖️";
           waterLevelStatus.style.color = "green";
           waterLevelStatus.style.width = "190px";
+          updatePumpStatus(pump1Switch, pump1Status);
+          updatePumpStatus(pump2Switch, pump2Status);
           // Close both pumps
           document.getElementById("pump1-switch").checked = false;
           document.getElementById("pump2-switch").checked = false;
+          if (pump1ManualState === null) {
+            document.getElementById("pump1-switch").checked = false;
+          }
+          if (pump2ManualState === null) {
+            document.getElementById("pump2-switch").checked = false;
+          }
         } else if (waterLevel1 === high_1 || waterLevel2 === high_2) {
           waterLevelStatus.innerHTML =
             "⚠️High Water Level! 🌊Overflow Expected!";
           waterLevelStatus.style.color = "red";
+          updatePumpStatus(pump1Switch, pump1Status);
+          updatePumpStatus(pump2Switch, pump2Status);
           // Open outlet pump, close inlet pump
           document.getElementById("pump1-switch").checked = false;
           document.getElementById("pump2-switch").checked = true;
-          //document.getElementById("pump1-switch").disabled = true;
-          //document.getElementById("pump2-switch").disabled = true;
+          if (pump1ManualState === null) {
+            document.getElementById("pump1-switch").checked = false;
+          }
+          if (pump2ManualState === null) {
+            document.getElementById("pump2-switch").checked = true;
+          }
         }
       }
 
