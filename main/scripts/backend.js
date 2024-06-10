@@ -1,8 +1,7 @@
 // getData.js
 const express = require("express");
 const admin = require("firebase-admin");
-const { DateTime } = require("luxon");
-const cors = require("cors"); // Import the cors package
+const cors = require("cors");
 
 // Initialize Firebase Admin SDK
 const serviceAccount = require("./zimunda-sensor-data-firebase-adminsdk-nqbrf-ad611c1e7e.json");
@@ -15,8 +14,12 @@ admin.initializeApp({
 const app = express();
 const port = 5000;
 
-// Use CORS middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://127.0.0.1:5501/",
+  })
+);
+
 
 // Fetch data from Firebase
 async function fetchData() {
