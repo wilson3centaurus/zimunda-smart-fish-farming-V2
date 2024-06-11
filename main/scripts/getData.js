@@ -32,6 +32,18 @@ async function getDataFromFirebase() {
   }
 }
 
+async function sendPumpControlRequest(pump, state) {
+  const response = await fetch("http://<raspberry_pi_ip>:5000/control_pump", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ pump, state }),
+  });
+  const data = await response.json();
+  console.log("Pump control response:", data);
+}
+
 async function displayData() {
   try {
     const data = await getDataFromFirebase();
@@ -105,11 +117,13 @@ async function displayData() {
         const pump2Status = document.getElementById("pump2-status");
 
         // Function to update the pump status based on the checkbox state
-        function updatePumpStatus(pumpSwitch, pumpStatus) {
+        function updatePumpStatus(pumpSwitch, pumpStatus, pump) {
           if (pumpSwitch.checked) {
             pumpStatus.textContent = "🟢running";
+            sendPumpControlRequest(pump, "on");
           } else {
             pumpStatus.textContent = "🔴stopped";
+            sendPumpControlRequest(pump, "off");
           }
         }
 
@@ -170,26 +184,27 @@ async function displayData() {
         const pump2Status = document.getElementById("pump2-status");
 
         // Function to update the pump status based on the checkbox state
-        function updatePumpStatus(pumpSwitch, pumpStatus) {
+        function updatePumpStatus(pumpSwitch, pumpStatus, pump) {
           if (pumpSwitch.checked) {
             pumpStatus.textContent = "🟢running";
+            sendPumpControlRequest(pump, "on");
           } else {
             pumpStatus.textContent = "🔴stopped";
+            sendPumpControlRequest(pump, "off");
           }
         }
 
-        // Initial status update
-        updatePumpStatus(pump1Switch, pump1Status);
-        updatePumpStatus(pump2Switch, pump2Status);
-
-        // Event listeners for the checkboxes
         pump1Switch.addEventListener("change", function () {
-          updatePumpStatus(pump1Switch, pump1Status);
+          updatePumpStatus(pump1Switch, pump1Status, "pump1");
         });
 
         pump2Switch.addEventListener("change", function () {
-          updatePumpStatus(pump2Switch, pump2Status);
+          updatePumpStatus(pump2Switch, pump2Status, "pump2");
         });
+
+        // Initial status update
+        updatePumpStatus(pump1Switch, pump1Status, "pump1");
+        updatePumpStatus(pump2Switch, pump2Status, "pump2");
       });
 
       /* ================================================================================= */
