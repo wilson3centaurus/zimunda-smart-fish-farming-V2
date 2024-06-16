@@ -221,7 +221,7 @@ async function displayData() {
       const thresholdDisplay = document.getElementById("thresholdDisplay");
       if (lastUpdate) lastUpdate.innerText = `${latestTimestamp}`;
       if (upTime) upTime.innerText = `${uptimeString}`;
-      if (thresholdDisplay)
+      if (thresholdDisplay) 
         thresholdDisplay.innerText = `Temp Threshold: ${TEMP_THRESHOLD_LOW}°C - ${TEMP_THRESHOLD_HIGH}°C`;
     } else {
       console.log("No data available.");
