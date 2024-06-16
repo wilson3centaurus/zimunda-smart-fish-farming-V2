@@ -184,6 +184,7 @@ function sendSMSMessage(message) {
 // When the user clicks anywhere outside of the modal, close it
 let modal = document.getElementById("id01");
 let logoutModal = document.querySelector(".user-dropdown-modal");
+let graphModal = document.querySelector(".graphModal");
 
 window.onclick = function (event) {
   if (event.target == modal) {
@@ -191,6 +192,9 @@ window.onclick = function (event) {
   }
   if (event.target == logoutModal) {
     logoutModal.style.display = "none";
+  }
+  if (event.target == graphModal) {
+    graphModal.style.display = "none";
   }
 };
 
