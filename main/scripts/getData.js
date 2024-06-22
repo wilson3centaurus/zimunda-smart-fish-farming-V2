@@ -16,7 +16,8 @@ async function getDataFromFirebase() {
           data.push({
             timestamp: value.timestamp,
             temperature: value.temperature,
-            waterLevel: value.water_level,
+            waterLevel: value["water level"],
+            //waterLevel: value.water_level,
           });
         }
       });
@@ -66,10 +67,15 @@ async function displayData() {
         Last Updated: ${latestTimestamp}
         Total Uptime: ${uptimeString}
         Temp Threshold: ${TEMP_THRESHOLD_LOW}°C - ${TEMP_THRESHOLD_HIGH}°C
-        Water Level: ${waterLevel === 0 ? "Low" : "Normal"}
+        Water Level: ${waterLevel === "Water Overflow" ? "Low" : "Normal"}
       `;
 
       console.log(statusMessage);
+      // Updating HTML
+      const lastUpdate = document.getElementById("lastUpdate");
+      const upTime = document.getElementById("uptime");
+      if (lastUpdate) lastUpdate.innerText = `${latestTimestamp}`;
+      if (upTime) upTime.innerText = `${uptimeString}`;
 
       /* =============================================================================== */
       const low_1 = 240;
@@ -97,12 +103,12 @@ async function displayData() {
         afterStyle.innerHTML = `.waterContainer::after { height: ${afterHeight}%; }`;
       }
 
-      if (waterLevel === 1) {
+      if (waterLevel === "Water level is normal") {
+        waterLevel1 = high_1;
+        waterLevel2 = high_2;
+      } else {
         waterLevel1 = normal_1;
         waterLevel2 = normal_2;
-      } else {
-        waterLevel1 = low_1;
-        waterLevel2 = low_2;
       }
 
       setWaterHeight(waterLevel1, waterLevel2);
@@ -215,13 +221,8 @@ async function displayData() {
         addNotification(alertMessage);
       }
 
-      // Updating HTML
-      const lastUpdate = document.getElementById("lastUpdate");
-      const upTime = document.getElementById("uptime");
       const thresholdDisplay = document.getElementById("thresholdDisplay");
-      if (lastUpdate) lastUpdate.innerText = `${latestTimestamp}`;
-      if (upTime) upTime.innerText = `${uptimeString}`;
-      if (thresholdDisplay) 
+      if (thresholdDisplay)
         thresholdDisplay.innerText = `Temp Threshold: ${TEMP_THRESHOLD_LOW}°C - ${TEMP_THRESHOLD_HIGH}°C`;
     } else {
       console.log("No data available.");

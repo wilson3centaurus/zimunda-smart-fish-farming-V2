@@ -1,7 +1,9 @@
-// getData.js
+// backend.js
 const express = require("express");
 const admin = require("firebase-admin");
 const cors = require("cors");
+const http = require("http");
+const WebSocket = require("ws");
 
 // Initialize Firebase Admin SDK
 const serviceAccount = require("./zimunda-sensor-data-firebase-adminsdk-nqbrf-ad611c1e7e.json");
@@ -20,25 +22,35 @@ app.use(
   })
 );
 
+// Create HTTP server and WebSocket server
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
-// Fetch data from Firebase
-async function fetchData() {
-  try {
-    const dbRef = admin.database().ref("/sensor_data");
-    const snapshot = await dbRef.once("value");
-    return snapshot.val();
-  } catch (error) {
-    console.error("Error fetching data from Firebase:", error);
-    throw error;
-  }
-}
+// Fetch initial data from Firebase and set up a real-time listener
+const dbRef = admin.database().ref("/temperature");
 
-// Serve data as JSON
+dbRef.on("value", (snapshot) => {
+  const data = snapshot.val();
+  const formattedData = Object.values(data).map((entry) => ({
+    temperature: entry.celsius,
+    timestamp: entry.timestamp,
+  }));
+
+  // Send data to all connected WebSocket clients
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ sensor_data: formattedData }));
+    }
+  });
+});
+
+// Serve initial data as JSON for Grafana setup
 app.get("/data", async (req, res) => {
   try {
-    const data = await fetchData();
+    const snapshot = await dbRef.once("value");
+    const data = snapshot.val();
     const formattedData = Object.values(data).map((entry) => ({
-      temperature: entry.temperature,
+      temperature: entry.celsius,
       timestamp: entry.timestamp,
     }));
     res.json({ sensor_data: formattedData });
@@ -49,6 +61,6 @@ app.get("/data", async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
