@@ -172,21 +172,18 @@ function isStable(temp) {
 
 async function getOpenAISummary(data) {
   // Make an API call to OpenAI's endpoint for summarization.
-   const response = await fetch("https://api.openai.com/v1/completions",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer sk-proj-SUZQpSvmWaC7nzXvD99dT3BlbkFJ5MgsV0jnK3jteN7IRurL`,
-      },
-      body: JSON.stringify({
-        prompt: `Provide a summary and insights based on the following temperature data:\n\n${JSON.stringify(
-          data
-        )}`,
-        max_tokens: 150,
-      }),
-    }
-  );
+   const response = await fetch("https://api.openai.com/v1/completions", {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json",
+     },
+     body: JSON.stringify({
+       prompt: `Provide a summary and insights based on the following temperature data:\n\n${JSON.stringify(
+         data
+       )}`,
+       max_tokens: 150,
+     }),
+   });
 
   const result = await response.json();
   return result.choices[0].text.trim();
