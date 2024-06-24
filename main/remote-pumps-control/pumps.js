@@ -1,5 +1,7 @@
+const RASPBERRY_PI_IP = "http://<YOUR_RASPBERRY_PI_IP>:5000";
+
 document.getElementById("inlet-on").addEventListener("click", function () {
-  fetch("/control-pump", {
+  fetch(`${RASPBERRY_PI_IP}/control-pump`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,7 +18,7 @@ document.getElementById("inlet-on").addEventListener("click", function () {
 });
 
 document.getElementById("inlet-off").addEventListener("click", function () {
-  fetch("/control-pump", {
+  fetch(`${RASPBERRY_PI_IP}/control-pump`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -33,7 +35,7 @@ document.getElementById("inlet-off").addEventListener("click", function () {
 });
 
 document.getElementById("outlet-on").addEventListener("click", function () {
-  fetch("/control-pump", {
+  fetch(`${RASPBERRY_PI_IP}/control-pump`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -50,7 +52,7 @@ document.getElementById("outlet-on").addEventListener("click", function () {
 });
 
 document.getElementById("outlet-off").addEventListener("click", function () {
-  fetch("/control-pump", {
+  fetch(`${RASPBERRY_PI_IP}/control-pump`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
