@@ -1,4 +1,4 @@
-const RASPBERRY_PI_IP = "http://<YOUR_RASPBERRY_PI_IP>:5000";
+const RASPBERRY_PI_IP = "http://<RASPBERRY_PI_IP>:5000";
 
 document.getElementById("inlet-on").addEventListener("click", function () {
   fetch(`${RASPBERRY_PI_IP}/control-pump`, {
